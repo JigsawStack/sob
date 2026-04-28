@@ -30,7 +30,7 @@ def _infer_one(
     # models (gpt-5 reasoning_effort, qwen3 enable_thinking, etc.). User-provided
     # extra_body wins via the order above.
     if config.disable_thinking:
-        extra_body.setdefault("reasoning", {"effort": "minimal", "exclude": True})
+        extra_body.setdefault("reasoning", {"effort": "None", "exclude": True})
 
     candidate = None
     input_tokens = 0
