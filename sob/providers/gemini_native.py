@@ -1,3 +1,23 @@
+"""Gemini provider.
+
+Reasoning / thinking notes
+--------------------------
+The default `thinking_budget=0` below fully disables thinking on **Gemini 2.5
+Flash** (the model used in the published leaderboard). It will NOT work for
+every other Gemini variant — each enforces a different floor and a different
+parameter:
+
+  - 2.5 Flash       → thinking_budget = 0    (full disable supported)
+  - 2.5 Flash-Lite  → thinking_budget ≥ 512  (no full disable)
+  - 2.5 Pro         → thinking_budget ≥ 128  (no full disable)
+  - 3 Flash         → thinking_level = "minimal"   (different param entirely)
+  - 3 Pro / 3.1 Pro → thinking_level = "low"       ("minimal" not exposed)
+
+If you run a model from any of the other rows above, edit the
+`ThinkingConfig` call below to match — passing `thinking_budget=0` to a Pro or
+Flash-Lite model will error, and 2.5-style budgets are silently ignored on
+Gemini 3.
+"""
 import asyncio
 import os
 import time
@@ -32,6 +52,8 @@ async def _infer_one(
         "max_output_tokens": config.max_tokens,
         "response_mime_type": "application/json",
     }
+    if config.disable_thinking:
+        config_kwargs["thinking_config"] = types.ThinkingConfig(thinking_budget=0)
     if config.use_structured_decoding:
         config_kwargs["response_schema"] = sanitized
 

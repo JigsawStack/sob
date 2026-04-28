@@ -26,6 +26,11 @@ def _infer_one(
     extra_body: dict = {}
     if config.openrouter_extra_body:
         extra_body.update(config.openrouter_extra_body)
+    # OpenRouter routes the per-provider reasoning toggle for thinking-capable
+    # models (gpt-5 reasoning_effort, qwen3 enable_thinking, etc.). User-provided
+    # extra_body wins via the order above.
+    if config.disable_thinking:
+        extra_body.setdefault("reasoning", {"effort": "minimal", "exclude": True})
 
     candidate = None
     input_tokens = 0

@@ -1,3 +1,23 @@
+"""OpenAI provider.
+
+Reasoning / thinking notes
+--------------------------
+The chat completions endpoint accepts different knobs for different families,
+and passing the wrong one returns 400. Current behaviour matches the gates
+below:
+
+  - GPT-5 / GPT-5-Mini / GPT-5-Nano  → reasoning_effort = "minimal".
+    Temperature is NOT accepted; we omit it.
+  - o-series (o1, o3, o4-mini, ...)  → reasoning_effort = "minimal".
+    Most also refuse temperature; current code does not pass it for them
+    either (the `not startswith("gpt-5")` gate sends temperature, which o1/o3
+    will reject — patch the gate if you add an o-series model).
+  - GPT-4.1 / GPT-4o / GPT-4o-mini   → standard chat. Reasoning effort is not
+    exposed and would error if passed; temperature is required.
+
+If you add a new model from any family, double-check both gates before
+running — silent acceptance of a 400 wastes the whole sweep.
+"""
 import json
 import os
 import time
@@ -44,6 +64,14 @@ def _infer_one(
     # gpt-5 family doesn't accept temperature; other models do.
     if not config.model_id.startswith("gpt-5"):
         request_kwargs["temperature"] = config.temperature
+
+    # Reasoning models (gpt-5 family, o-series): minimum reasoning effort.
+    # Chat completions accepts reasoning_effort for these; non-reasoning
+    # models would error on this param, so we gate it.
+    if config.disable_thinking and (
+        config.model_id.startswith("gpt-5") or config.model_id.startswith("o")
+    ):
+        request_kwargs["reasoning_effort"] = "minimal"
 
     candidate = None
     input_tokens = output_tokens = 0
