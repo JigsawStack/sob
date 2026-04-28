@@ -4,8 +4,8 @@
 </div>
 
 <p align="center">
-  <a href="arxiv paper">
-    <img alt="Paper" src="https://img.shields.io/badge/Paper-Arxiv-b31b1b">
+  <a href="https://interfaze.ai/sob_paper.pdf">
+    <img alt="Paper" src="https://img.shields.io/badge/Paper-pdf-b31b1b">
   </a>
   <a href="https://huggingface.co/datasets/interfaze-ai/sob">
     <img alt="HF Dataset" src="https://img.shields.io/badge/🤗_Dataset-interfaze--ai/sob-yellow">
@@ -13,11 +13,14 @@
   <a href="https://huggingface.co/spaces/interfaze-ai/sob-leaderboard">
     <img alt="Leaderboard" src="https://img.shields.io/badge/🏆_Leaderboard-Live-success">
   </a>
+  <a href="https://interfaze.ai/leaderboards/structured-output-benchmark">
+    <img alt="Interfaze" src="https://img.shields.io/badge/Interfaze-Leaderboard-1f6feb">
+  </a>
   <a href="https://github.com/JigsawStack/sob/blob/main/LICENSE">
     <img alt="License" src="https://img.shields.io/badge/License-MIT-blue">
   </a>
-  <a href="https://jigsawstack.com">
-    <img alt="JigsawStack" src="https://img.shields.io/badge/Built_by-JigsawStack-4C1">
+  <a href="https://interfaze.ai">
+    <img alt="interfaze" src="https://img.shields.io/badge/Built_by-Interfaze-4C1">
   </a>
 </p>
 
