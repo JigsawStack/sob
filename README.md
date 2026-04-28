@@ -10,6 +10,9 @@
   <a href="https://huggingface.co/datasets/interfaze-ai/sob">
     <img alt="HF Dataset" src="https://img.shields.io/badge/🤗_Dataset-interfaze--ai/sob-yellow">
   </a>
+    <a href="https://interfaze.ai/blog/introducing-structured-output-benchmark">
+    <img alt="Blog" src="https://img.shields.io/badge/✍️ Blog-sob-yellow">
+  </a>
   <a href="https://huggingface.co/spaces/interfaze-ai/sob-leaderboard">
     <img alt="Leaderboard" src="https://img.shields.io/badge/🏆_Leaderboard-Live-success">
   </a>
@@ -20,7 +23,7 @@
     <img alt="License" src="https://img.shields.io/badge/License-MIT-blue">
   </a>
   <a href="https://interfaze.ai">
-    <img alt="interfaze" src="https://img.shields.io/badge/Built_by-Interfaze-4C1">
+    <img alt="interfaze" src="https://img.shields.io/badge/Built_by-Interfaze--ai-4C1">
   </a>
 </p>
 
