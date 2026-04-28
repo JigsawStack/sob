@@ -1,0 +1,4 @@
+data/text_responses/*.jsonl               filter=lfs diff=lfs merge=lfs -text
+data/images_responses/*.jsonl             filter=lfs diff=lfs merge=lfs -text
+data/audio_responses/*.jsonl              filter=lfs diff=lfs merge=lfs -text
+data/evaluation/**/eval_records.jsonl     filter=lfs diff=lfs merge=lfs -text

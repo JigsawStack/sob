@@ -1,0 +1,430 @@
+{
+  "response_file": "data/images_responses/response_gemini-2.5-flash_image.jsonl",
+  "num_records": 209,
+  "model_ids": [
+    "gemini-2.5-flash"
+  ],
+  "data_quality": {
+    "json_parse_fail_count": 43,
+    "json_non_structured_root_count": 43,
+    "invalid_schema_input_count": 0,
+    "unknown_difficulty_count": 0,
+    "malformed_jsonl_line_count": 0
+  },
+  "summary": {
+    "overall": {
+      "n": 209,
+      "metrics": {
+        "json_parse_success": {
+          "mean": 0.7942583732057417,
+          "ci95_low": 0.7368421052631579,
+          "ci95_high": 0.84688995215311,
+          "metric_name": "JSON Parse Success"
+        },
+        "json_root_structured": {
+          "mean": 0.7942583732057417,
+          "ci95_low": 0.7368421052631579,
+          "ci95_high": 0.84688995215311,
+          "metric_name": "Structured JSON Root"
+        },
+        "schema_valid_input": {
+          "mean": 1.0,
+          "ci95_low": 1.0,
+          "ci95_high": 1.0,
+          "metric_name": "Schema Valid Input"
+        },
+        "schema_compliance": {
+          "mean": 0.7942583732057417,
+          "ci95_low": 0.7320574162679426,
+          "ci95_high": 0.8516746411483254,
+          "metric_name": "JSON Pass Rate"
+        },
+        "leaf_value_em": {
+          "mean": 0.5581504918558131,
+          "ci95_low": 0.5069925412207336,
+          "ci95_high": 0.6055466958326258,
+          "metric_name": "Truth Score"
+        },
+        "value_token_f1": {
+          "mean": 0.6942705493708262,
+          "ci95_low": 0.6409802852844902,
+          "ci95_high": 0.7449018604901195,
+          "metric_name": "Faithfulness Score"
+        },
+        "hier_path_recall": {
+          "mean": 0.7839198789649342,
+          "ci95_low": 0.7302441350752867,
+          "ci95_high": 0.8339612780748692,
+          "metric_name": "Path Recall"
+        },
+        "path_set_f1": {
+          "mean": 0.7735826719741372,
+          "ci95_low": 0.7232873799549806,
+          "ci95_high": 0.8271017251164885,
+          "metric_name": "Structure Coverage"
+        },
+        "type_precision": {
+          "mean": 0.7942583732057417,
+          "ci95_low": 0.7320574162679426,
+          "ci95_high": 0.8516746411483254,
+          "metric_name": "Type Safety"
+        },
+        "strict_json_em": {
+          "mean": 0.1339712918660287,
+          "ci95_low": 0.09090909090909091,
+          "ci95_high": 0.18181818181818182,
+          "metric_name": "Perfect Response Rate"
+        }
+      },
+      "category_scores": {
+        "Long Context Extraction": {
+          "mean": 0.6787803067305246,
+          "ci95_low": 0.6294875896696748,
+          "ci95_high": 0.7298248912254501,
+          "category_name": "Long Context Extraction",
+          "components": [
+            "leaf_value_em",
+            "value_token_f1",
+            "hier_path_recall"
+          ]
+        },
+        "Complex Schema Handling": {
+          "mean": 0.7873664727952068,
+          "ci95_low": 0.7340260377266811,
+          "ci95_high": 0.8403236685373507,
+          "category_name": "Complex Schema Handling",
+          "components": [
+            "schema_compliance",
+            "path_set_f1",
+            "type_precision"
+          ]
+        },
+        "Multi-Context Linking": {
+          "mean": 0.6262105206133196,
+          "ci95_low": 0.5767872063536326,
+          "ci95_high": 0.6753797994655193,
+          "category_name": "Multi-Context Linking",
+          "components": [
+            "leaf_value_em",
+            "value_token_f1"
+          ]
+        },
+        "Output Contract Reliability": {
+          "mean": 0.7942583732057417,
+          "ci95_low": 0.7368421052631579,
+          "ci95_high": 0.84688995215311,
+          "category_name": "Output Contract Reliability",
+          "components": [
+            "json_parse_success",
+            "schema_compliance",
+            "type_precision"
+          ]
+        },
+        "Strict Precision": {
+          "mean": 0.1339712918660287,
+          "ci95_low": 0.0861244019138756,
+          "ci95_high": 0.17703349282296652,
+          "category_name": "Strict Precision",
+          "components": [
+            "strict_json_em"
+          ]
+        }
+      }
+    },
+    "overall_weighted": {
+      "n": 209,
+      "metrics": {
+        "json_parse_success": {
+          "mean": 0.7857142857142857,
+          "ci95_low": 0.7286184210526315,
+          "ci95_high": 0.8447412353923205,
+          "metric_name": "JSON Parse Success"
+        },
+        "json_root_structured": {
+          "mean": 0.7857142857142857,
+          "ci95_low": 0.728171334431631,
+          "ci95_high": 0.8410596026490066,
+          "metric_name": "Structured JSON Root"
+        },
+        "schema_valid_input": {
+          "mean": 1.0,
+          "ci95_low": 1.0,
+          "ci95_high": 1.0,
+          "metric_name": "Schema Valid Input"
+        },
+        "schema_compliance": {
+          "mean": 0.7857142857142857,
+          "ci95_low": 0.7286432160804021,
+          "ci95_high": 0.8344481605351171,
+          "metric_name": "JSON Pass Rate"
+        },
+        "leaf_value_em": {
+          "mean": 0.5588880686568083,
+          "ci95_low": 0.5061474769678147,
+          "ci95_high": 0.6146928770085549,
+          "metric_name": "Truth Score"
+        },
+        "value_token_f1": {
+          "mean": 0.6910651659956816,
+          "ci95_low": 0.6320942498753812,
+          "ci95_high": 0.7391344916952974,
+          "metric_name": "Faithfulness Score"
+        },
+        "hier_path_recall": {
+          "mean": 0.7760184623195415,
+          "ci95_low": 0.7214062725044672,
+          "ci95_high": 0.8324139585339299,
+          "metric_name": "Path Recall"
+        },
+        "path_set_f1": {
+          "mean": 0.765658131440789,
+          "ci95_low": 0.7080083441431956,
+          "ci95_high": 0.8197933006746391,
+          "metric_name": "Structure Coverage"
+        },
+        "type_precision": {
+          "mean": 0.7857142857142857,
+          "ci95_low": 0.7299509001636661,
+          "ci95_high": 0.841845140032949,
+          "metric_name": "Type Safety"
+        },
+        "strict_json_em": {
+          "mean": 0.12956810631229235,
+          "ci95_low": 0.0858085808580858,
+          "ci95_high": 0.1812191103789127,
+          "metric_name": "Perfect Response Rate"
+        }
+      },
+      "category_scores": {
+        "Long Context Extraction": {
+          "mean": 0.6753238989906771,
+          "ci95_low": 0.6209115911272619,
+          "ci95_high": 0.724523646525512,
+          "category_name": "Long Context Extraction",
+          "components": [
+            "leaf_value_em",
+            "value_token_f1",
+            "hier_path_recall"
+          ]
+        },
+        "Complex Schema Handling": {
+          "mean": 0.7790289009564535,
+          "ci95_low": 0.7272977595471399,
+          "ci95_high": 0.8327368464428543,
+          "category_name": "Complex Schema Handling",
+          "components": [
+            "schema_compliance",
+            "path_set_f1",
+            "type_precision"
+          ]
+        },
+        "Multi-Context Linking": {
+          "mean": 0.6249766173262449,
+          "ci95_low": 0.5766569869247319,
+          "ci95_high": 0.676129354504673,
+          "category_name": "Multi-Context Linking",
+          "components": [
+            "leaf_value_em",
+            "value_token_f1"
+          ]
+        },
+        "Output Contract Reliability": {
+          "mean": 0.7857142857142857,
+          "ci95_low": 0.7312703583061889,
+          "ci95_high": 0.8360927152317881,
+          "category_name": "Output Contract Reliability",
+          "components": [
+            "json_parse_success",
+            "schema_compliance",
+            "type_precision"
+          ]
+        },
+        "Strict Precision": {
+          "mean": 0.12956810631229235,
+          "ci95_low": 0.08609271523178808,
+          "ci95_high": 0.17637271214642264,
+          "category_name": "Strict Precision",
+          "components": [
+            "strict_json_em"
+          ]
+        }
+      },
+      "weighting": "schema_complexity",
+      "weight_field_priority": [
+        "schema_complexity",
+        "difficulty"
+      ],
+      "difficulty_weights": {
+        "easy": 1.0,
+        "medium": 2.0,
+        "hard": 3.0
+      }
+    }
+  },
+  "error_analysis": {
+    "top_missing_gt_paths": [
+      {
+        "path": "associated_problems[5]",
+        "count": 1
+      },
+      {
+        "path": "postdoc_details.development_areas[1]",
+        "count": 1
+      },
+      {
+        "path": "chemical_formula",
+        "count": 1
+      },
+      {
+        "path": "etymology.color_allusion",
+        "count": 1
+      },
+      {
+        "path": "etymology.meaning",
+        "count": 1
+      },
+      {
+        "path": "etymology.origin_language",
+        "count": 1
+      },
+      {
+        "path": "etymology.root_word",
+        "count": 1
+      },
+      {
+        "path": "formation_process_summary",
+        "count": 1
+      },
+      {
+        "path": "general_description",
+        "count": 1
+      },
+      {
+        "path": "geographic_sources[0].country",
+        "count": 1
+      },
+      {
+        "path": "geographic_sources[0].location_details",
+        "count": 1
+      },
+      {
+        "path": "geographic_sources[0].mine_name",
+        "count": 1
+      },
+      {
+        "path": "geographic_sources[0].status",
+        "count": 1
+      },
+      {
+        "path": "geographic_sources[1].country",
+        "count": 1
+      },
+      {
+        "path": "geographic_sources[1].location_details",
+        "count": 1
+      },
+      {
+        "path": "geographic_sources[1].mine_name",
+        "count": 1
+      },
+      {
+        "path": "geographic_sources[1].status",
+        "count": 1
+      },
+      {
+        "path": "geographic_sources[2].country",
+        "count": 1
+      },
+      {
+        "path": "geographic_sources[2].location_details",
+        "count": 1
+      },
+      {
+        "path": "geographic_sources[2].mine_name",
+        "count": 1
+      }
+    ],
+    "top_missing_required_paths": [
+      {
+        "path": "mineral_name",
+        "count": 1
+      },
+      {
+        "path": "general_description",
+        "count": 1
+      },
+      {
+        "path": "etymology",
+        "count": 1
+      },
+      {
+        "path": "etymology.origin_language",
+        "count": 1
+      },
+      {
+        "path": "etymology.root_word",
+        "count": 1
+      },
+      {
+        "path": "etymology.meaning",
+        "count": 1
+      },
+      {
+        "path": "etymology.color_allusion",
+        "count": 1
+      },
+      {
+        "path": "chemical_formula",
+        "count": 1
+      },
+      {
+        "path": "formation_process_summary",
+        "count": 1
+      },
+      {
+        "path": "physical_properties",
+        "count": 1
+      },
+      {
+        "path": "physical_properties.usual_occurrence_modes",
+        "count": 1
+      },
+      {
+        "path": "physical_properties.fracture_appearance",
+        "count": 1
+      },
+      {
+        "path": "physical_properties.color_varieties",
+        "count": 1
+      },
+      {
+        "path": "historical_identifications",
+        "count": 1
+      },
+      {
+        "path": "historical_identifications[].source",
+        "count": 1
+      },
+      {
+        "path": "historical_identifications[].identified_name",
+        "count": 1
+      },
+      {
+        "path": "geographic_sources",
+        "count": 1
+      },
+      {
+        "path": "geographic_sources[].country",
+        "count": 1
+      },
+      {
+        "path": "geographic_sources[].status",
+        "count": 1
+      },
+      {
+        "path": "notable_specimens",
+        "count": 1
+      }
+    ]
+  }
+}

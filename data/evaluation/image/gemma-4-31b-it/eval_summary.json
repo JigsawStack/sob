@@ -1,0 +1,382 @@
+{
+  "response_file": "data/images_responses/response_gemma-4-31b-it_image.jsonl",
+  "num_records": 209,
+  "model_ids": [
+    "gemma-4-31b-it"
+  ],
+  "data_quality": {
+    "json_parse_fail_count": 1,
+    "json_non_structured_root_count": 1,
+    "invalid_schema_input_count": 0,
+    "unknown_difficulty_count": 0,
+    "malformed_jsonl_line_count": 0
+  },
+  "summary": {
+    "overall": {
+      "n": 209,
+      "metrics": {
+        "json_parse_success": {
+          "mean": 0.9952153110047847,
+          "ci95_low": 0.9856459330143541,
+          "ci95_high": 1.0,
+          "metric_name": "JSON Parse Success"
+        },
+        "json_root_structured": {
+          "mean": 0.9952153110047847,
+          "ci95_low": 0.9808612440191388,
+          "ci95_high": 1.0,
+          "metric_name": "Structured JSON Root"
+        },
+        "schema_valid_input": {
+          "mean": 1.0,
+          "ci95_low": 1.0,
+          "ci95_high": 1.0,
+          "metric_name": "Schema Valid Input"
+        },
+        "schema_compliance": {
+          "mean": 0.9952153110047847,
+          "ci95_low": 0.9856459330143541,
+          "ci95_high": 1.0,
+          "metric_name": "JSON Pass Rate"
+        },
+        "leaf_value_em": {
+          "mean": 0.6685544502149684,
+          "ci95_low": 0.6314410073005832,
+          "ci95_high": 0.7073419394508985,
+          "metric_name": "Truth Score"
+        },
+        "value_token_f1": {
+          "mean": 0.8353664185587351,
+          "ci95_low": 0.8036112258916691,
+          "ci95_high": 0.8624620066331863,
+          "metric_name": "Faithfulness Score"
+        },
+        "hier_path_recall": {
+          "mean": 0.9631271415034764,
+          "ci95_low": 0.9490825518309134,
+          "ci95_high": 0.9747970993618379,
+          "metric_name": "Path Recall"
+        },
+        "path_set_f1": {
+          "mean": 0.956706411683843,
+          "ci95_low": 0.9425678005994358,
+          "ci95_high": 0.9670522010654257,
+          "metric_name": "Structure Coverage"
+        },
+        "type_precision": {
+          "mean": 0.9952153110047847,
+          "ci95_low": 0.9856459330143541,
+          "ci95_high": 1.0,
+          "metric_name": "Type Safety"
+        },
+        "strict_json_em": {
+          "mean": 0.11483253588516747,
+          "ci95_low": 0.07177033492822966,
+          "ci95_high": 0.15789473684210525,
+          "metric_name": "Perfect Response Rate"
+        }
+      },
+      "category_scores": {
+        "Long Context Extraction": {
+          "mean": 0.82234933675906,
+          "ci95_low": 0.7977515451565406,
+          "ci95_high": 0.8456470796644405,
+          "category_name": "Long Context Extraction",
+          "components": [
+            "leaf_value_em",
+            "value_token_f1",
+            "hier_path_recall"
+          ]
+        },
+        "Complex Schema Handling": {
+          "mean": 0.9823790112311375,
+          "ci95_low": 0.9702061909174606,
+          "ci95_high": 0.9892651661656205,
+          "category_name": "Complex Schema Handling",
+          "components": [
+            "schema_compliance",
+            "path_set_f1",
+            "type_precision"
+          ]
+        },
+        "Multi-Context Linking": {
+          "mean": 0.7519604343868517,
+          "ci95_low": 0.71975532541575,
+          "ci95_high": 0.7825804750315775,
+          "category_name": "Multi-Context Linking",
+          "components": [
+            "leaf_value_em",
+            "value_token_f1"
+          ]
+        },
+        "Output Contract Reliability": {
+          "mean": 0.9952153110047847,
+          "ci95_low": 0.9856459330143541,
+          "ci95_high": 1.0,
+          "category_name": "Output Contract Reliability",
+          "components": [
+            "json_parse_success",
+            "schema_compliance",
+            "type_precision"
+          ]
+        },
+        "Strict Precision": {
+          "mean": 0.11483253588516747,
+          "ci95_low": 0.07655502392344497,
+          "ci95_high": 0.15789473684210525,
+          "category_name": "Strict Precision",
+          "components": [
+            "strict_json_em"
+          ]
+        }
+      }
+    },
+    "overall_weighted": {
+      "n": 209,
+      "metrics": {
+        "json_parse_success": {
+          "mean": 0.9950166112956811,
+          "ci95_low": 0.9849246231155779,
+          "ci95_high": 1.0,
+          "metric_name": "JSON Parse Success"
+        },
+        "json_root_structured": {
+          "mean": 0.9950166112956811,
+          "ci95_low": 0.984822934232715,
+          "ci95_high": 1.0,
+          "metric_name": "Structured JSON Root"
+        },
+        "schema_valid_input": {
+          "mean": 1.0,
+          "ci95_low": 1.0,
+          "ci95_high": 1.0,
+          "metric_name": "Schema Valid Input"
+        },
+        "schema_compliance": {
+          "mean": 0.9950166112956811,
+          "ci95_low": 0.9848993288590604,
+          "ci95_high": 1.0,
+          "metric_name": "JSON Pass Rate"
+        },
+        "leaf_value_em": {
+          "mean": 0.6722096352960484,
+          "ci95_low": 0.630751309583317,
+          "ci95_high": 0.7105934485551747,
+          "metric_name": "Truth Score"
+        },
+        "value_token_f1": {
+          "mean": 0.8374308725360823,
+          "ci95_low": 0.8081834927887596,
+          "ci95_high": 0.8652010396320697,
+          "metric_name": "Faithfulness Score"
+        },
+        "hier_path_recall": {
+          "mean": 0.9629166968069991,
+          "ci95_low": 0.9483912879655313,
+          "ci95_high": 0.9745823845801737,
+          "metric_name": "Path Recall"
+        },
+        "path_set_f1": {
+          "mean": 0.9565283256230704,
+          "ci95_low": 0.941144724626549,
+          "ci95_high": 0.9685717228689568,
+          "metric_name": "Structure Coverage"
+        },
+        "type_precision": {
+          "mean": 0.9950166112956811,
+          "ci95_low": 0.9849498327759197,
+          "ci95_high": 1.0,
+          "metric_name": "Type Safety"
+        },
+        "strict_json_em": {
+          "mean": 0.11295681063122924,
+          "ci95_low": 0.07345575959933222,
+          "ci95_high": 0.15763546798029557,
+          "metric_name": "Perfect Response Rate"
+        }
+      },
+      "category_scores": {
+        "Long Context Extraction": {
+          "mean": 0.8241857348797099,
+          "ci95_low": 0.8008926450261039,
+          "ci95_high": 0.8472484794649664,
+          "category_name": "Long Context Extraction",
+          "components": [
+            "leaf_value_em",
+            "value_token_f1",
+            "hier_path_recall"
+          ]
+        },
+        "Complex Schema Handling": {
+          "mean": 0.9821871827381443,
+          "ci95_low": 0.9696356374750892,
+          "ci95_high": 0.9890312371079665,
+          "category_name": "Complex Schema Handling",
+          "components": [
+            "schema_compliance",
+            "path_set_f1",
+            "type_precision"
+          ]
+        },
+        "Multi-Context Linking": {
+          "mean": 0.7548202539160653,
+          "ci95_low": 0.7233753898807461,
+          "ci95_high": 0.7834019503448648,
+          "category_name": "Multi-Context Linking",
+          "components": [
+            "leaf_value_em",
+            "value_token_f1"
+          ]
+        },
+        "Output Contract Reliability": {
+          "mean": 0.9950166112956811,
+          "ci95_low": 0.9849246231155779,
+          "ci95_high": 1.0,
+          "category_name": "Output Contract Reliability",
+          "components": [
+            "json_parse_success",
+            "schema_compliance",
+            "type_precision"
+          ]
+        },
+        "Strict Precision": {
+          "mean": 0.11295681063122924,
+          "ci95_low": 0.06988352745424292,
+          "ci95_high": 0.16193656093489148,
+          "category_name": "Strict Precision",
+          "components": [
+            "strict_json_em"
+          ]
+        }
+      },
+      "weighting": "schema_complexity",
+      "weight_field_priority": [
+        "schema_complexity",
+        "difficulty"
+      ],
+      "difficulty_weights": {
+        "easy": 1.0,
+        "medium": 2.0,
+        "hard": 3.0
+      }
+    }
+  },
+  "error_analysis": {
+    "top_missing_gt_paths": [
+      {
+        "path": "benefits_of_previews[4]",
+        "count": 1
+      },
+      {
+        "path": "benefits_of_previews[5]",
+        "count": 1
+      },
+      {
+        "path": "drawbacks_of_previews[3]",
+        "count": 1
+      },
+      {
+        "path": "specific_challenges[2].challenge",
+        "count": 1
+      },
+      {
+        "path": "specific_challenges[2].supporting_quotes[0]",
+        "count": 1
+      },
+      {
+        "path": "analysis_sections[0].methods[4]",
+        "count": 1
+      },
+      {
+        "path": "analysis_sections[0].tools_software[2]",
+        "count": 1
+      },
+      {
+        "path": "analysis_sections[1].methods[1]",
+        "count": 1
+      },
+      {
+        "path": "analysis_sections[1].tools_software[0]",
+        "count": 1
+      },
+      {
+        "path": "analysis_sections[1].tools_software[1]",
+        "count": 1
+      },
+      {
+        "path": "analysis_sections[2].methods[1]",
+        "count": 1
+      },
+      {
+        "path": "soft_tissue_calcification_results[0].treatments[3].calcium_umol",
+        "count": 1
+      },
+      {
+        "path": "soft_tissue_calcification_results[0].treatments[3].treatment_group",
+        "count": 1
+      },
+      {
+        "path": "soft_tissue_calcification_results[1].treatments[3].calcium_umol",
+        "count": 1
+      },
+      {
+        "path": "soft_tissue_calcification_results[1].treatments[3].treatment_group",
+        "count": 1
+      },
+      {
+        "path": "soft_tissue_calcification_results[2].treatments[3].calcium_umol",
+        "count": 1
+      },
+      {
+        "path": "soft_tissue_calcification_results[2].treatments[3].treatment_group",
+        "count": 1
+      },
+      {
+        "path": "soft_tissue_calcification_results[3].treatments[3].calcium_umol",
+        "count": 1
+      },
+      {
+        "path": "soft_tissue_calcification_results[3].treatments[3].treatment_group",
+        "count": 1
+      },
+      {
+        "path": "influential_approaches[1].derived_elements[2]",
+        "count": 1
+      }
+    ],
+    "top_missing_required_paths": [
+      {
+        "path": "figure_8_details",
+        "count": 1
+      },
+      {
+        "path": "figure_8_details.main_topic",
+        "count": 1
+      },
+      {
+        "path": "figure_8_details.schemes",
+        "count": 1
+      },
+      {
+        "path": "figure_8_details.alpha_values",
+        "count": 1
+      },
+      {
+        "path": "figure_9_details",
+        "count": 1
+      },
+      {
+        "path": "figure_9_details.left_panel_content",
+        "count": 1
+      },
+      {
+        "path": "figure_9_details.right_panel_content",
+        "count": 1
+      },
+      {
+        "path": "context_section_title",
+        "count": 1
+      }
+    ]
+  }
+}

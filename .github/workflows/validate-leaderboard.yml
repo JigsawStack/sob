@@ -1,0 +1,95 @@
+name: Validate leaderboard
+
+# Runs on every PR that touches an eval result, the build script, or the
+# Space app. Builds the leaderboard JSON and asserts it is well-formed,
+# without uploading anything. Publish happens separately on push to main.
+
+on:
+  pull_request:
+    paths:
+      - 'data/evaluation/**'
+      - 'scripts/build_leaderboard.py'
+      - 'sob-leaderboard/**'
+      - '.github/workflows/validate-leaderboard.yml'
+      - '.github/workflows/publish-leaderboard.yml'
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          lfs: true
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Build leaderboard JSON
+        run: python scripts/build_leaderboard.py --output leaderboard.json | tee build.log
+
+      - name: Validate JSON shape
+        run: |
+          python - <<'PY'
+          import json
+          d = json.load(open("leaderboard.json"))
+          rows = d.get("rows") or []
+          assert rows, "no rows in leaderboard.json"
+          required = {"model", "overall", "value_accuracy", "faithfulness",
+                      "json_pass_rate", "path_recall", "structure_coverage", "type_safety"}
+          for i, row in enumerate(rows):
+              missing = required - set(row)
+              assert not missing, f"row {i} ({row.get('model')}) missing: {missing}"
+              for k in ("overall", "value_accuracy", "faithfulness",
+                        "json_pass_rate", "path_recall", "structure_coverage", "type_safety"):
+                  v = row[k]
+                  assert v is None or 0.0 <= v <= 1.0, f"{row.get('model')} {k}={v} out of [0,1]"
+          print(f"ok: {len(rows)} rows valid")
+          PY
+
+      - name: Upload leaderboard.json artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: leaderboard-json
+          path: leaderboard.json
+
+      - name: Comment leaderboard preview on PR
+        # Fork PRs only get a read-only GITHUB_TOKEN, so the comment step
+        # will 403; the build/validate above still gates merge correctly.
+        continue-on-error: true
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const d = JSON.parse(fs.readFileSync('leaderboard.json', 'utf8'));
+            const rows = d.rows;
+            const fmt = (v) => v == null ? '—' : v.toFixed(3);
+            const top = rows.slice(0, 10).map((r, i) =>
+              `| ${i+1} | ${r.model} | ${fmt(r.overall)} | ${fmt(r.value_accuracy)} | ${fmt(r.json_pass_rate)} | ${fmt(r.perfect_response)} |`
+            ).join('\n');
+            const body = [
+              '### 🏆 Leaderboard preview',
+              '',
+              `Built **${rows.length} models**, top 10 by Overall:`,
+              '',
+              '| Rank | Model | Overall | Val. Acc. | JSON Pass | Perfect |',
+              '| :--- | :---- | :-----: | :-------: | :-------: | :-----: |',
+              top,
+              '',
+              `_Generated at ${d.generated_at} • full JSON in workflow artifacts_`,
+            ].join('\n');
+
+            const { owner, repo } = context.repo;
+            const issue_number = context.issue.number;
+            const { data: comments } = await github.rest.issues.listComments({ owner, repo, issue_number });
+            const marker = '### 🏆 Leaderboard preview';
+            const existing = comments.find(c => c.user.type === 'Bot' && c.body.startsWith(marker));
+            if (existing) {
+              await github.rest.issues.updateComment({ owner, repo, comment_id: existing.id, body });
+            } else {
+              await github.rest.issues.createComment({ owner, repo, issue_number, body });
+            }

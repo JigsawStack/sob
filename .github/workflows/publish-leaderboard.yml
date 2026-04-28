@@ -1,0 +1,90 @@
+name: Publish leaderboard
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'data/evaluation/**'
+      - 'scripts/build_leaderboard.py'
+      - 'sob-leaderboard/**'
+      - '.github/workflows/publish-leaderboard.yml'
+  workflow_dispatch:
+
+concurrency:
+  group: publish-leaderboard
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          lfs: true
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install huggingface_hub
+        run: pip install --upgrade "huggingface_hub>=0.24"
+
+      - name: Build leaderboard JSON
+        run: python scripts/build_leaderboard.py --output leaderboard.json
+
+      - name: Validate JSON
+        run: |
+          python - <<'PY'
+          import json
+          d = json.load(open("leaderboard.json"))
+          rows = d.get("rows") or []
+          assert rows, "no rows in leaderboard.json"
+          required = {"model", "overall", "value_accuracy", "faithfulness",
+                      "json_pass_rate", "path_recall", "structure_coverage", "type_safety"}
+          missing = required - set(rows[0])
+          assert not missing, f"missing keys in row: {missing}"
+          print(f"ok: {len(rows)} rows, generated_at={d.get('generated_at')}")
+          PY
+
+      - name: Upload leaderboard.json to dataset
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+          GITHUB_SHA: ${{ github.sha }}
+        run: |
+          python <<'PY'
+          import os
+          from huggingface_hub import HfApi
+
+          api = HfApi(token=os.environ["HF_TOKEN"])
+          api.upload_file(
+              path_or_fileobj="leaderboard.json",
+              path_in_repo="leaderboard.json",
+              repo_id="interfaze-ai/sob-leaderboard",
+              repo_type="dataset",
+              commit_message=f"Publish leaderboard ({os.environ['GITHUB_SHA'][:7]})",
+          )
+          print("Uploaded leaderboard.json -> dataset interfaze-ai/sob-leaderboard")
+          PY
+
+      - name: Sync Space app from sob-leaderboard/
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+          GITHUB_SHA: ${{ github.sha }}
+        run: |
+          python <<'PY'
+          import os
+          from huggingface_hub import HfApi
+
+          api = HfApi(token=os.environ["HF_TOKEN"])
+          api.upload_folder(
+              folder_path="sob-leaderboard",
+              repo_id="interfaze-ai/sob-leaderboard",
+              repo_type="space",
+              commit_message=f"Sync app from {os.environ['GITHUB_SHA'][:7]}",
+              ignore_patterns=["__pycache__/**", "*.pyc", ".DS_Store", "leaderboard.json"],
+          )
+          print("Synced sob-leaderboard/ -> space interfaze-ai/sob-leaderboard")
+          PY
