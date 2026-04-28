@@ -68,7 +68,9 @@ def build_eval_record(
     }
     metadata.update(passthrough)
 
-    resolved_schema = schema if schema is not None else parse_string(record.get("json_schema"))
+    resolved_schema = (
+        schema if schema is not None else parse_string(record.get("json_schema"))
+    )
     ground_truth = record.get("ground_truth")
     if ground_truth is not None:
         ground_truth = parse_string(ground_truth)

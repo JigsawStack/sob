@@ -26,10 +26,10 @@ from utils.logger import logger
 
 PROVIDER_REGISTRY = {
     "openrouter": "sob.providers.openrouter",
-    "vllm":       "sob.providers.vllm",
-    "openai":     "sob.providers.openai_native",
-    "anthropic":  "sob.providers.anthropic_native",
-    "gemini":     "sob.providers.gemini_native",
+    "vllm": "sob.providers.vllm",
+    "openai": "sob.providers.openai_native",
+    "anthropic": "sob.providers.anthropic_native",
+    "gemini": "sob.providers.gemini_native",
 }
 
 
@@ -41,7 +41,9 @@ def _provider_runner(name: str):
 
 def parse_args() -> argparse.Namespace:
     p = argparse.ArgumentParser(description="Run model inference on the SOB benchmark.")
-    p.add_argument("--provider", default=None, help="openrouter|vllm|openai|anthropic|gemini")
+    p.add_argument(
+        "--provider", default=None, help="openrouter|vllm|openai|anthropic|gemini"
+    )
     p.add_argument("--modality", default=None, help="text|image|audio")
     p.add_argument("--model-id", default=None)
     p.add_argument("--sample-size", type=int, default=None)
@@ -51,7 +53,9 @@ def parse_args() -> argparse.Namespace:
     return p.parse_args()
 
 
-def _override_config(config: InferenceConfig, args: argparse.Namespace) -> InferenceConfig:
+def _override_config(
+    config: InferenceConfig, args: argparse.Namespace
+) -> InferenceConfig:
     if args.provider:
         config.provider = args.provider
     if args.modality:

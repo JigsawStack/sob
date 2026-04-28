@@ -10,7 +10,7 @@ from utils.logger import logger
 # the default config's "test" split; image and audio live under dedicated
 # configs with a single "train" split each.
 MODALITY_DATASET = {
-    "text":  {"config_name": None, "split": "test"},
+    "text": {"config_name": None, "split": "test"},
     "image": {"config_name": "image", "split": "train"},
     "audio": {"config_name": "audio", "split": "train"},
 }

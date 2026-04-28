@@ -18,6 +18,7 @@ If you run a model from any of the other rows above, edit the
 Flash-Lite model will error, and 2.5-style budgets are silently ignored on
 Gemini 3.
 """
+
 import asyncio
 import os
 import time
@@ -131,7 +132,9 @@ async def _run_async(records: list[dict], config: InferenceConfig):
     return out
 
 
-def run(records: list[dict], config: InferenceConfig) -> list[tuple[dict, object, int, int, float]]:
+def run(
+    records: list[dict], config: InferenceConfig
+) -> list[tuple[dict, object, int, int, float]]:
     """Run Gemini inference (wraps async internals in a sync call).
 
     Note: if called from within an existing event loop (e.g. a Jupyter

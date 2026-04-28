@@ -13,10 +13,7 @@ LOG_FILE_PATH = log_dir / LOG_FILE
 logging.basicConfig(
     level=logging.INFO,
     format="[ %(asctime)s ] %(lineno)d %(name)s - %(levelname)s - %(message)s",
-    handlers=[
-        logging.FileHandler(LOG_FILE_PATH),
-        logging.StreamHandler(sys.stdout)
-    ]
+    handlers=[logging.FileHandler(LOG_FILE_PATH), logging.StreamHandler(sys.stdout)],
 )
 
 logger = logging.getLogger("sob")

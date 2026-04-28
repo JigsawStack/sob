@@ -68,12 +68,16 @@ def _infer_one(
                 )
                 time.sleep(wait)
             else:
-                logger.error(f"Failed: {str(record.get('record_id', ''))[:12]}... ({e})")
+                logger.error(
+                    f"Failed: {str(record.get('record_id', ''))[:12]}... ({e})"
+                )
 
     return record, candidate, input_tokens, output_tokens
 
 
-def run(records: list[dict], config: InferenceConfig) -> list[tuple[dict, object, int, int, float]]:
+def run(
+    records: list[dict], config: InferenceConfig
+) -> list[tuple[dict, object, int, int, float]]:
     """Run Anthropic native inference with a JsonlCheckpoint.
 
     On resume, records already in the checkpoint are skipped. The checkpoint
@@ -94,8 +98,7 @@ def run(records: list[dict], config: InferenceConfig) -> list[tuple[dict, object
         logger.info(f"Loaded {len(done)} completed records from checkpoint.")
 
     remaining_indexed = [
-        (i, r) for i, r in enumerate(records)
-        if str(r.get("record_id")) not in done
+        (i, r) for i, r in enumerate(records) if str(r.get("record_id")) not in done
     ]
     logger.info(
         f"{len(records)} total records; {len(remaining_indexed)} to run, "
@@ -129,7 +132,9 @@ def run(records: list[dict], config: InferenceConfig) -> list[tuple[dict, object
                 ex.submit(_infer_one, client, r, config): i
                 for i, r in remaining_indexed
             }
-            pbar = tqdm(as_completed(futures), total=len(remaining_indexed), desc="Anthropic")
+            pbar = tqdm(
+                as_completed(futures), total=len(remaining_indexed), desc="Anthropic"
+            )
             for fut in pbar:
                 idx = futures[fut]
                 record, candidate, in_tok, out_tok = fut.result()
@@ -159,7 +164,11 @@ def run(records: list[dict], config: InferenceConfig) -> list[tuple[dict, object
                 pbar.set_postfix(valid=n_valid, bad_json=n_invalid, failed=n_failed)
 
     total_time = time.time() - start
-    avg_time = round(total_time / max(1, len(remaining_indexed)), 4) if remaining_indexed else 0.0
+    avg_time = (
+        round(total_time / max(1, len(remaining_indexed)), 4)
+        if remaining_indexed
+        else 0.0
+    )
     logger.info(
         f"Anthropic done. {len(records)} records total "
         f"(newly inferred: {len(remaining_indexed)} in {total_time:.1f}s, "

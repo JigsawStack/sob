@@ -21,9 +21,7 @@ def add_token_count(dataset: Dataset, tokenizer_name: str) -> Dataset:
             truncation=False,
             add_special_tokens=False,
         )
-        return {
-            "input_context_length": [len(ids) for ids in tokens["input_ids"]]
-        }
+        return {"input_context_length": [len(ids) for ids in tokens["input_ids"]]}
 
     dataset = dataset.map(_count, batched=True, batch_size=64)
     logger.info("Token counts added to dataset.")
@@ -33,6 +31,7 @@ def add_token_count(dataset: Dataset, tokenizer_name: str) -> Dataset:
 def add_difficulty_weight(dataset: Dataset) -> Dataset:
     """Add `difficulty_weight` using `question_difficulty` if present,
     else falling back to `schema_complexity` (image/audio records)."""
+
     def _weight(example):
         difficulty = (
             example.get("question_difficulty")

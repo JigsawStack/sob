@@ -11,7 +11,9 @@ from utils.config import InferenceConfig
 from utils.logger import logger
 
 
-def run(records: list[dict], config: InferenceConfig) -> list[tuple[dict, object, int, int, float]]:
+def run(
+    records: list[dict], config: InferenceConfig
+) -> list[tuple[dict, object, int, int, float]]:
     """Run local vLLM inference over `records`."""
     llm = LLM(
         model=config.model_id,

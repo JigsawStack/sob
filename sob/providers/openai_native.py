@@ -18,6 +18,7 @@ below:
 If you add a new model from any family, double-check both gates before
 running — silent acceptance of a 400 wastes the whole sweep.
 """
+
 import json
 import os
 import time
@@ -97,16 +98,20 @@ def _infer_one(
                 )
                 time.sleep(wait)
             else:
-                logger.error(f"Failed: {str(record.get('record_id', ''))[:12]}... ({e})")
+                logger.error(
+                    f"Failed: {str(record.get('record_id', ''))[:12]}... ({e})"
+                )
 
     # Record the effective schema used for evaluation: strict schema only when
     # it was sent to OpenAI's schema-constrained mode.
     effective_schema = strict_schema if config.use_structured_decoding else schema
-    
+
     return record, candidate, effective_schema, input_tokens, output_tokens
 
 
-def run(records: list[dict], config: InferenceConfig) -> list[tuple[dict, object, int, int, float]]:
+def run(
+    records: list[dict], config: InferenceConfig
+) -> list[tuple[dict, object, int, int, float]]:
     client = OpenAI(
         api_key=os.environ["OPENAI_API_KEY"],
         base_url="https://api.openai.com/v1",
@@ -122,8 +127,7 @@ def run(records: list[dict], config: InferenceConfig) -> list[tuple[dict, object
     start = time.time()
     with ThreadPoolExecutor(max_workers=config.max_workers) as ex:
         futures = {
-            ex.submit(_infer_one, client, r, config): i
-            for i, r in enumerate(records)
+            ex.submit(_infer_one, client, r, config): i for i, r in enumerate(records)
         }
         pbar = tqdm(as_completed(futures), total=len(records), desc="OpenAI")
         for fut in pbar:

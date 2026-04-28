@@ -131,7 +131,9 @@ def main() -> None:
             raise SystemExit(f"No valid records found in {response_file}")
 
         model_ids = sorted({record.row["model_id"] for record in records})
-        output_dir = resolve_output_dir(Path(args.output_root), modality, response_file, model_ids)
+        output_dir = resolve_output_dir(
+            Path(args.output_root), modality, response_file, model_ids
+        )
         output_dir.mkdir(parents=True, exist_ok=True)
 
         records_path = output_dir / "eval_records.jsonl"
@@ -190,7 +192,9 @@ def sanitize_model_id(model_id: str) -> str:
     return model_id.split("/")[-1]
 
 
-def write_records(records_path: Path, records: list[RecordMetrics], modality: str) -> None:
+def write_records(
+    records_path: Path, records: list[RecordMetrics], modality: str
+) -> None:
     with records_path.open("w", encoding="utf-8") as handle:
         for record in records:
             payload = dict(record.row)
@@ -201,7 +205,9 @@ def write_records(records_path: Path, records: list[RecordMetrics], modality: st
             handle.write(json.dumps(payload) + "\n")
 
 
-def evaluate_file(response_file: Path, modality: str) -> tuple[list[RecordMetrics], dict[str, int]]:
+def evaluate_file(
+    response_file: Path, modality: str
+) -> tuple[list[RecordMetrics], dict[str, int]]:
     records: list[RecordMetrics] = []
     data_quality = {
         "json_parse_fail_count": 0,
@@ -264,17 +270,34 @@ def evaluate_record(record: dict[str, Any], modality: str) -> RecordMetrics:
     schema_valid_input = 1.0 if is_valid_schema(schema) else 0.0
     parsed_ok, candidate = parse_candidate(candidate_raw)
     root_structured = 1.0 if parsed_ok and isinstance(candidate, (dict, list)) else 0.0
-    schema_compliance = 1.0 if parsed_ok and root_structured and schema_valid_input and validates(candidate, schema) else 0.0
+    schema_compliance = (
+        1.0
+        if parsed_ok
+        and root_structured
+        and schema_valid_input
+        and validates(candidate, schema)
+        else 0.0
+    )
 
     gt_leafs = flatten_leaf_paths(ground_truth)
     pred_leafs = flatten_leaf_paths(candidate) if root_structured else {}
 
     raw_path_recall = ratio(len(set(gt_leafs) & set(pred_leafs)), len(gt_leafs))
-    raw_path_set_f1 = f1_from_counts(len(set(gt_leafs) & set(pred_leafs)), len(pred_leafs), len(gt_leafs))
+    raw_path_set_f1 = f1_from_counts(
+        len(set(gt_leafs) & set(pred_leafs)), len(pred_leafs), len(gt_leafs)
+    )
     raw_leaf_em = exact_match_ratio(gt_leafs, pred_leafs)
     raw_value_token_f1 = mean_token_f1(gt_leafs, pred_leafs)
-    raw_type_precision = compute_type_precision(candidate, schema) if root_structured and schema_valid_input else 0.0
-    required_key_recall, missing_required_paths = compute_required_key_recall(candidate, schema) if root_structured and schema_valid_input else (0.0, required_paths(schema))
+    raw_type_precision = (
+        compute_type_precision(candidate, schema)
+        if root_structured and schema_valid_input
+        else 0.0
+    )
+    required_key_recall, missing_required_paths = (
+        compute_required_key_recall(candidate, schema)
+        if root_structured and schema_valid_input
+        else (0.0, required_paths(schema))
+    )
 
     hardening = 1.0 if parsed_ok and root_structured and schema_compliance else 0.0
     coverage_gate = compute_coverage_gate(modality, raw_path_set_f1)
@@ -284,7 +307,9 @@ def evaluate_record(record: dict[str, Any], modality: str) -> RecordMetrics:
     hier_path_recall = raw_path_recall * hardening
     path_set_f1 = raw_path_set_f1 * hardening
     type_precision = raw_type_precision * hardening
-    strict_json_em = 1.0 if canonical_json(candidate) == canonical_json(ground_truth) else 0.0
+    strict_json_em = (
+        1.0 if canonical_json(candidate) == canonical_json(ground_truth) else 0.0
+    )
 
     row = {
         "record_id": record_id,
@@ -457,7 +482,11 @@ def schema_type_for_path(schema: Any, path: str) -> str | None:
             current = current.get("items")
         if current is None:
             return None
-    return normalize_schema_type(current.get("type")) if isinstance(current, dict) else None
+    return (
+        normalize_schema_type(current.get("type"))
+        if isinstance(current, dict)
+        else None
+    )
 
 
 def split_path(path: str) -> list[str | int]:
@@ -492,7 +521,15 @@ def normalize_schema_type(schema_type: Any) -> str | None:
         non_null = [item for item in schema_type if item != "null"]
         if len(non_null) == 1:
             schema_type = non_null[0]
-    if schema_type in {"string", "integer", "number", "boolean", "object", "array", "null"}:
+    if schema_type in {
+        "string",
+        "integer",
+        "number",
+        "boolean",
+        "object",
+        "array",
+        "null",
+    }:
         return str(schema_type)
     return None
 
@@ -528,14 +565,20 @@ def is_type_match(value: Any, expected_type: str) -> bool:
 def exact_match_ratio(gt_leafs: dict[str, Any], pred_leafs: dict[str, Any]) -> float:
     if not gt_leafs:
         return 1.0
-    matches = sum(1 for path, gt_val in gt_leafs.items() if path in pred_leafs and gt_val == pred_leafs[path])
+    matches = sum(
+        1
+        for path, gt_val in gt_leafs.items()
+        if path in pred_leafs and gt_val == pred_leafs[path]
+    )
     return matches / len(gt_leafs)
 
 
 def mean_token_f1(gt_leafs: dict[str, Any], pred_leafs: dict[str, Any]) -> float:
     if not gt_leafs:
         return 1.0
-    return sum(token_f1(gt_val, pred_leafs.get(path)) for path, gt_val in gt_leafs.items()) / len(gt_leafs)
+    return sum(
+        token_f1(gt_val, pred_leafs.get(path)) for path, gt_val in gt_leafs.items()
+    ) / len(gt_leafs)
 
 
 def token_f1(gt_value: Any, pred_value: Any) -> float:
@@ -618,7 +661,9 @@ def build_summary(
         "strict_json_em",
     ]
     overall = summarize_rows(rows, metrics, bootstrap_samples, seed, weighted=False)
-    overall_weighted = summarize_rows(rows, metrics, bootstrap_samples, seed, weighted=True)
+    overall_weighted = summarize_rows(
+        rows, metrics, bootstrap_samples, seed, weighted=True
+    )
 
     payload: dict[str, Any] = {
         "response_file": response_file.as_posix(),
@@ -649,7 +694,9 @@ def summarize_rows(
     rng = random.Random(seed + (1 if weighted else 0))
     summary_metrics: dict[str, Any] = {}
     for metric in metrics:
-        mean = weighted_mean(rows, metric) if weighted else arithmetic_mean(rows, metric)
+        mean = (
+            weighted_mean(rows, metric) if weighted else arithmetic_mean(rows, metric)
+        )
         low, high = bootstrap_ci(rows, metric, bootstrap_samples, rng, weighted)
         summary_metrics[metric] = {
             "mean": mean,
@@ -661,7 +708,9 @@ def summarize_rows(
     category_scores: dict[str, Any] = {}
     for category_name, components in CATEGORIES.items():
         mean = category_mean(rows, components, weighted)
-        low, high = bootstrap_category_ci(rows, components, bootstrap_samples, rng, weighted)
+        low, high = bootstrap_category_ci(
+            rows, components, bootstrap_samples, rng, weighted
+        )
         category_scores[category_name] = {
             "mean": mean,
             "ci95_low": low,
@@ -695,10 +744,15 @@ def weighted_mean(rows: list[dict[str, Any]], metric: str) -> float:
     return sum(row[metric] * row["difficulty_weight"] for row in rows) / total_weight
 
 
-def category_mean(rows: list[dict[str, Any]], components: list[str], weighted: bool) -> float:
+def category_mean(
+    rows: list[dict[str, Any]], components: list[str], weighted: bool
+) -> float:
     if not rows:
         return 0.0
-    per_row = [{**row, "_category": sum(row[m] for m in components) / len(components)} for row in rows]
+    per_row = [
+        {**row, "_category": sum(row[m] for m in components) / len(components)}
+        for row in rows
+    ]
     if weighted:
         return weighted_mean(per_row, "_category")
     return arithmetic_mean(per_row, "_category")
@@ -716,7 +770,11 @@ def bootstrap_ci(
     estimates = []
     for _ in range(samples):
         sample_rows = [rows[rng.randrange(len(rows))] for _ in range(len(rows))]
-        estimates.append(weighted_mean(sample_rows, metric) if weighted else arithmetic_mean(sample_rows, metric))
+        estimates.append(
+            weighted_mean(sample_rows, metric)
+            if weighted
+            else arithmetic_mean(sample_rows, metric)
+        )
     estimates.sort()
     return percentile_bounds(estimates)
 
@@ -746,7 +804,9 @@ def percentile_bounds(values: list[float]) -> tuple[float, float]:
     return values[low_idx], values[high_idx]
 
 
-def summarize_error_paths(records: list[RecordMetrics], top_k_errors: int) -> dict[str, Any]:
+def summarize_error_paths(
+    records: list[RecordMetrics], top_k_errors: int
+) -> dict[str, Any]:
     gt_counter = Counter()
     required_counter = Counter()
     for record in records:

@@ -26,6 +26,7 @@ Perfect Response Rate is aggregated over text + image only (audio omitted).
 
 Overall (Adj.) = Overall (Raw) * coverage, where coverage = n_eval / 5324.
 """
+
 import argparse
 import json
 import sys
@@ -43,12 +44,12 @@ TOTAL_N = N_T + N_I + N_A  # 5324
 MODALITIES = ("text", "image", "audio")
 
 METRIC_KEYS = [
-    ("leaf_value_em",      "Val.Acc."),
-    ("value_token_f1",     "Faithful."),
-    ("schema_compliance",  "JSON Pass"),
-    ("hier_path_recall",   "Path Rec."),
-    ("path_set_f1",        "Str.Cov."),
-    ("type_precision",     "Type Saf."),
+    ("leaf_value_em", "Val.Acc."),
+    ("value_token_f1", "Faithful."),
+    ("schema_compliance", "JSON Pass"),
+    ("hier_path_recall", "Path Rec."),
+    ("path_set_f1", "Str.Cov."),
+    ("type_precision", "Type Saf."),
 ]
 
 
@@ -99,7 +100,7 @@ def aggregate(values_with_weights):
 
 
 def compute_row(model_dir: str):
-    text  = load_weighted_metrics("text",  model_dir)
+    text = load_weighted_metrics("text", model_dir)
     image = load_weighted_metrics("image", model_dir)
     audio = load_weighted_metrics("audio", model_dir)
 
@@ -109,15 +110,20 @@ def compute_row(model_dir: str):
     aggregates = {}
     for k, _ in METRIC_KEYS:
         vals = []
-        if text  is not None and k in text:  vals.append((text[k],  W_T))
-        if image is not None and k in image: vals.append((image[k], W_I))
-        if audio is not None and k in audio: vals.append((audio[k], W_A))
+        if text is not None and k in text:
+            vals.append((text[k], W_T))
+        if image is not None and k in image:
+            vals.append((image[k], W_I))
+        if audio is not None and k in audio:
+            vals.append((audio[k], W_A))
         if vals:
             aggregates[k] = aggregate(vals)
 
     perf_vals = []
-    if text  is not None and "strict_json_em" in text:  perf_vals.append((text["strict_json_em"],  W_T))
-    if image is not None and "strict_json_em" in image: perf_vals.append((image["strict_json_em"], W_I))
+    if text is not None and "strict_json_em" in text:
+        perf_vals.append((text["strict_json_em"], W_T))
+    if image is not None and "strict_json_em" in image:
+        perf_vals.append((image["strict_json_em"], W_I))
     if perf_vals:
         aggregates["perfect"] = aggregate(perf_vals)
 
@@ -129,30 +135,37 @@ def compute_row(model_dir: str):
     overall_adj = raw * coverage
 
     return {
-        "overall_adj":     overall_adj,
-        "overall_raw":     raw,
-        "coverage":        coverage,
-        "modalities":      [m for m, x in zip(MODALITIES, [text, image, audio]) if x],
-        "value_accuracy":  aggregates.get("leaf_value_em"),
-        "faithfulness":    aggregates.get("value_token_f1"),
-        "json_pass":       aggregates.get("schema_compliance"),
-        "path_recall":     aggregates.get("hier_path_recall"),
-        "structure_cov":   aggregates.get("path_set_f1"),
-        "type_safety":     aggregates.get("type_precision"),
-        "perfect":         aggregates.get("perfect"),
+        "overall_adj": overall_adj,
+        "overall_raw": raw,
+        "coverage": coverage,
+        "modalities": [m for m, x in zip(MODALITIES, [text, image, audio]) if x],
+        "value_accuracy": aggregates.get("leaf_value_em"),
+        "faithfulness": aggregates.get("value_token_f1"),
+        "json_pass": aggregates.get("schema_compliance"),
+        "path_recall": aggregates.get("hier_path_recall"),
+        "structure_cov": aggregates.get("path_set_f1"),
+        "type_safety": aggregates.get("type_precision"),
+        "perfect": aggregates.get("perfect"),
     }
 
 
 JSON_KEY_MAP = {
-    "overall_adj":     "overall",
-    "json_pass":       "json_pass_rate",
-    "structure_cov":   "structure_coverage",
-    "perfect":         "perfect_response",
+    "overall_adj": "overall",
+    "json_pass": "json_pass_rate",
+    "structure_cov": "structure_coverage",
+    "perfect": "perfect_response",
 }
 JSON_ROW_KEYS = [
-    "model", "overall", "value_accuracy", "faithfulness",
-    "json_pass_rate", "path_recall", "structure_coverage",
-    "type_safety", "perfect_response", "modalities",
+    "model",
+    "overall",
+    "value_accuracy",
+    "faithfulness",
+    "json_pass_rate",
+    "path_recall",
+    "structure_coverage",
+    "type_safety",
+    "perfect_response",
+    "modalities",
 ]
 
 
@@ -165,16 +178,25 @@ def _to_json_row(row: dict) -> dict:
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--output", default="leaderboard.json",
-                        help="Path to write the leaderboard JSON (default: leaderboard.json)")
-    parser.add_argument("--print-latex", action="store_true",
-                        help="Also print LaTeX rows for paper Table 1.")
+    parser.add_argument(
+        "--output",
+        default="leaderboard.json",
+        help="Path to write the leaderboard JSON (default: leaderboard.json)",
+    )
+    parser.add_argument(
+        "--print-latex",
+        action="store_true",
+        help="Also print LaTeX rows for paper Table 1.",
+    )
     args = parser.parse_args()
 
     display_names = load_display_names()
     model_dirs = discover_model_dirs()
     if not model_dirs:
-        print("error: no model directories with eval_summary.json found under data/evaluation/", file=sys.stderr)
+        print(
+            "error: no model directories with eval_summary.json found under data/evaluation/",
+            file=sys.stderr,
+        )
         sys.exit(1)
 
     rows = []
@@ -202,8 +224,17 @@ def main():
         print(f"  (skipped {len(skipped)} dirs with no metrics: {', '.join(skipped)})")
     print()
 
-    cols = ["model", "overall_adj", "value_accuracy", "faithfulness",
-            "json_pass", "path_recall", "structure_cov", "type_safety", "perfect"]
+    cols = [
+        "model",
+        "overall_adj",
+        "value_accuracy",
+        "faithfulness",
+        "json_pass",
+        "path_recall",
+        "structure_cov",
+        "type_safety",
+        "perfect",
+    ]
     widths = [25, 12, 10, 10, 10, 10, 10, 10, 10]
     print("".join(f"{c:<{w}}" for c, w in zip(cols, widths)))
     for r in rows:

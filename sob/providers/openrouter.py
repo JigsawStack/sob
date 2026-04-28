@@ -68,12 +68,16 @@ def _infer_one(
                 )
                 time.sleep(wait)
             else:
-                logger.error(f"Failed: {str(record.get('record_id', ''))[:12]}... ({e})")
+                logger.error(
+                    f"Failed: {str(record.get('record_id', ''))[:12]}... ({e})"
+                )
 
     return record, candidate, input_tokens, output_tokens
 
 
-def run(records: list[dict], config: InferenceConfig) -> list[tuple[dict, object, int, int, float]]:
+def run(
+    records: list[dict], config: InferenceConfig
+) -> list[tuple[dict, object, int, int, float]]:
     """Run OpenRouter inference over `records`.
 
     Returns a list of tuples: (record, candidate_response, input_tokens,
@@ -92,8 +96,7 @@ def run(records: list[dict], config: InferenceConfig) -> list[tuple[dict, object
     start = time.time()
     with ThreadPoolExecutor(max_workers=config.max_workers) as ex:
         futures = {
-            ex.submit(_infer_one, client, r, config): i
-            for i, r in enumerate(records)
+            ex.submit(_infer_one, client, r, config): i for i, r in enumerate(records)
         }
         pbar = tqdm(as_completed(futures), total=len(records), desc="OpenRouter")
         for fut in pbar:
