@@ -6,7 +6,6 @@ on:
     paths:
       - 'data/evaluation/**'
       - 'scripts/build_leaderboard.py'
-      - 'sob-leaderboard/**'
       - '.github/workflows/publish-leaderboard.yml'
   workflow_dispatch:
 
@@ -67,24 +66,4 @@ jobs:
               commit_message=f"Publish leaderboard ({os.environ['GITHUB_SHA'][:7]})",
           )
           print("Uploaded leaderboard.json -> dataset interfaze-ai/sob-leaderboard")
-          PY
-
-      - name: Sync Space app from sob-leaderboard/
-        env:
-          HF_TOKEN: ${{ secrets.HF_TOKEN }}
-          GITHUB_SHA: ${{ github.sha }}
-        run: |
-          python <<'PY'
-          import os
-          from huggingface_hub import HfApi
-
-          api = HfApi(token=os.environ["HF_TOKEN"])
-          api.upload_folder(
-              folder_path="sob-leaderboard",
-              repo_id="interfaze-ai/sob-leaderboard",
-              repo_type="space",
-              commit_message=f"Sync app from {os.environ['GITHUB_SHA'][:7]}",
-              ignore_patterns=["__pycache__/**", "*.pyc", ".DS_Store", "leaderboard.json"],
-          )
-          print("Synced sob-leaderboard/ -> space interfaze-ai/sob-leaderboard")
           PY

@@ -1,15 +1,14 @@
 name: Validate leaderboard
 
-# Runs on every PR that touches an eval result, the build script, or the
-# Space app. Builds the leaderboard JSON and asserts it is well-formed,
-# without uploading anything. Publish happens separately on push to main.
+# Runs on every PR that touches an eval result or the build script. Builds the
+# leaderboard JSON and asserts it is well-formed, without uploading anything.
+# Publish (to the dataset) happens separately on push to main.
 
 on:
   pull_request:
     paths:
       - 'data/evaluation/**'
       - 'scripts/build_leaderboard.py'
-      - 'sob-leaderboard/**'
       - '.github/workflows/validate-leaderboard.yml'
       - '.github/workflows/publish-leaderboard.yml'
 
