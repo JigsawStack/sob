@@ -188,18 +188,6 @@ Preview locally before opening a PR:
 python scripts/build_leaderboard.py --output leaderboard.json
 ```
 
-## Citation
-
-```bibtex
-@inproceedings{singh2026sob,
-  title     = {The Structured Output Benchmark: A Multi-Source Benchmark for Evaluating Structured Output Quality in Large Language Models},
-  author    = {Singh, Abhinav Kumar and Khurdula, Harsha Vardhan and Khemlani, Yoeven D and Agarwal, Vineet},
-  booktitle = {NeurIPS 2026 Evaluations and Datasets Track},
-  year      = {2026},
-  publisher = {JigsawStack, Inc.}
-}
-```
-
 ## License
 
 [MIT License](LICENSE). Source datasets retain their original licenses: HotpotQA (CC-BY-SA-4.0), AMI Meeting Corpus (CC-BY-4.0), olmOCR-bench / olmOCR (ODC-BY / Apache-2.0).
