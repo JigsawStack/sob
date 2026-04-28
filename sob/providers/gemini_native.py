@@ -1,0 +1,119 @@
+import asyncio
+import os
+import time
+
+from google import genai
+from google.genai import types
+from tqdm.auto import tqdm
+
+from sob.common.prompts import SYSTEM_PROMPT, build_user_message
+from sob.common.schema_utils import (
+    extract_json,
+    parse_if_string,
+    sanitize_schema_for_gemini,
+)
+from utils.config import InferenceConfig
+from utils.logger import logger
+
+
+async def _infer_one(
+    aclient,
+    record: dict,
+    config: InferenceConfig,
+    sem: asyncio.Semaphore,
+) -> tuple[dict, object | None, dict, int, int]:
+    raw_schema = parse_if_string(record.get("json_schema"))
+    sanitized = sanitize_schema_for_gemini(raw_schema)
+
+    user_msg = build_user_message(record, schema=raw_schema)
+    config_kwargs = {
+        "system_instruction": SYSTEM_PROMPT,
+        "temperature": config.temperature,
+        "max_output_tokens": config.max_tokens,
+        "response_mime_type": "application/json",
+    }
+    if config.use_structured_decoding:
+        config_kwargs["response_schema"] = sanitized
+
+    input_tokens = output_tokens = 0
+    candidate = None
+    async with sem:
+        response = None
+        raw = ""
+        try:
+            response = await aclient.models.generate_content(
+                model=config.model_id,
+                contents=user_msg,
+                config=types.GenerateContentConfig(**config_kwargs),
+            )
+            raw = response.text or ""
+        except Exception as e:
+            logger.error(f"Failed: {str(record.get('record_id', ''))[:12]}... ({e})")
+            raw = ""
+
+    if response is not None:
+        usage = getattr(response, "usage_metadata", None)
+        if usage is not None:
+            input_tokens = getattr(usage, "prompt_token_count", 0) or 0
+            output_tokens = getattr(usage, "candidates_token_count", 0) or 0
+
+    candidate = extract_json(raw) if raw else None
+    effective_schema = sanitized if config.use_structured_decoding else raw_schema
+    return record, candidate, effective_schema, input_tokens, output_tokens
+
+
+async def _run_async(records: list[dict], config: InferenceConfig):
+    client = genai.Client(api_key=os.environ["GEMINI_API_KEY"])
+    aclient = client.aio
+    sem = asyncio.Semaphore(config.gemini_max_concurrency)
+
+    logger.info(
+        f"Gemini native provider ready: model={config.model_id} "
+        f"concurrency={config.gemini_max_concurrency} "
+        f"structured={config.use_structured_decoding}"
+    )
+
+    tasks = [_infer_one(aclient, r, config, sem) for r in records]
+    results_by_idx: list = [None] * len(records)
+    order = {id(t): i for i, t in enumerate(tasks)}
+
+    start = time.time()
+    pbar = tqdm(total=len(tasks), desc="Gemini")
+    for fut in asyncio.as_completed(tasks):
+        rec, candidate, sanitized, in_tok, out_tok = await fut
+        # We don't know the original index from `as_completed`, so match by
+        # record_id; cheaper than per-task wrapping.
+        rid = rec.get("record_id")
+        for i, r in enumerate(records):
+            if r.get("record_id") == rid and results_by_idx[i] is None:
+                results_by_idx[i] = (rec, candidate, sanitized, in_tok, out_tok)
+                break
+        pbar.update(1)
+    pbar.close()
+
+    total_time = time.time() - start
+    avg_time = round(total_time / max(1, len(records)), 4)
+    logger.info(
+        f"Gemini done. {len(records)} records in {total_time:.1f}s "
+        f"({avg_time}s/record)."
+    )
+
+    out = []
+    for entry in results_by_idx:
+        if entry is None:
+            continue
+        rec, candidate, sanitized, in_tok, out_tok = entry
+        rec = dict(rec)
+        rec["json_schema"] = sanitized
+        out.append((rec, candidate, in_tok, out_tok, avg_time))
+    return out
+
+
+def run(records: list[dict], config: InferenceConfig) -> list[tuple[dict, object, int, int, float]]:
+    """Run Gemini inference (wraps async internals in a sync call).
+
+    Note: if called from within an existing event loop (e.g. a Jupyter
+    notebook without nest_asyncio), this will fail. Use `asyncio.run`
+    directly from a notebook instead.
+    """
+    return asyncio.run(_run_async(records, config))
