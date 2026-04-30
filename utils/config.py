@@ -3,7 +3,7 @@ from dataclasses import dataclass
 
 @dataclass
 class InferenceConfig:
-    sentence_transformer_model: str = "all-MiniLM-L6-v2"
+    sentence_transformer_model: str = "sentence-transformers/all-MiniLM-L6-v2"
     model_id: str = (
         "openai/gpt-oss-20b"  # Change to the model you want to run inference with
     )
