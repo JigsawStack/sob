@@ -20,5 +20,6 @@
   "gpt-oss":                              "GPT-OSS-20B",
   "inference-net-Schematron-8B":          "Schematron-8B",
   "ibm-granite-4.0-h-small":              "IBM-Granite-4.0",
-  "interfaze-beta":                       "Interfaze-Beta"
+  "interfaze-beta":                       "Interfaze-Beta",
+  "claude-opus-4-7":                      "Claude-Opus-4.7"
 }
