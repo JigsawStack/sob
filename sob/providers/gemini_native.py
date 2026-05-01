@@ -37,6 +37,20 @@ from utils.config import InferenceConfig
 from utils.logger import logger
 
 
+def _thinking_config_for(model_id: str) -> "types.ThinkingConfig":
+    """Pick the right ThinkingConfig knobs for the model's parameter shape.
+
+    Gemini 3 introduced `thinking_level` and dropped `thinking_budget` for
+    Pro/Flash; passing the wrong one to either generation errors out. See the
+    floors documented in the module docstring.
+    """
+    mid = model_id.lower()
+    if mid.startswith("gemini-3") or mid.startswith("models/gemini-3"):
+        level = "minimal" if "flash" in mid else "low"
+        return types.ThinkingConfig(thinking_level=level)
+    return types.ThinkingConfig(thinking_budget=0)
+
+
 async def _infer_one(
     aclient,
     record: dict,
@@ -54,7 +68,7 @@ async def _infer_one(
         "response_mime_type": "application/json",
     }
     if config.disable_thinking:
-        config_kwargs["thinking_config"] = types.ThinkingConfig(thinking_budget=0)
+        config_kwargs["thinking_config"] = _thinking_config_for(config.model_id)
     if config.use_structured_decoding:
         config_kwargs["response_schema"] = sanitized
 
@@ -98,7 +112,6 @@ async def _run_async(records: list[dict], config: InferenceConfig):
 
     tasks = [_infer_one(aclient, r, config, sem) for r in records]
     results_by_idx: list = [None] * len(records)
-    order = {id(t): i for i, t in enumerate(tasks)}
 
     start = time.time()
     pbar = tqdm(total=len(tasks), desc="Gemini")
