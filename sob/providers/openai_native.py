@@ -21,6 +21,7 @@ running — silent acceptance of a 400 wastes the whole sweep.
 
 import json
 import os
+import re
 import time
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
@@ -31,6 +32,18 @@ from sob.common.prompts import SYSTEM_PROMPT, build_user_message
 from sob.common.schema_utils import parse_if_string, normalize_schema_strict
 from utils.config import InferenceConfig
 from utils.logger import logger
+
+
+_GPT5_DOTTED = re.compile(r"^gpt-5\.\d")
+
+
+def _min_reasoning_effort(model_id: str) -> str | None:
+    """Return the lowest reasoning_effort string the model accepts, or None."""
+    if _GPT5_DOTTED.match(model_id):
+        return "none"
+    if model_id.startswith("gpt-5") or model_id.startswith("o"):
+        return "minimal"
+    return None
 
 
 def _infer_one(
@@ -66,13 +79,13 @@ def _infer_one(
     if not config.model_id.startswith("gpt-5"):
         request_kwargs["temperature"] = config.temperature
 
-    # Reasoning models (gpt-5 family, o-series): minimum reasoning effort.
-    # Chat completions accepts reasoning_effort for these; non-reasoning
-    # models would error on this param, so we gate it.
-    if config.disable_thinking and (
-        config.model_id.startswith("gpt-5") or config.model_id.startswith("o")
-    ):
-        request_kwargs["reasoning_effort"] = "minimal"
+    # Reasoning models: pick the lowest effort value the model accepts.
+    # gpt-5 / gpt-5-mini / gpt-5-nano / o-series take "minimal"; gpt-5.1+
+    # (gpt-5.5, gpt-5.2, ...) replaced "minimal" with "none". Wrong value
+    # 400s, so detect by version.
+    effort = _min_reasoning_effort(config.model_id)
+    if config.disable_thinking and effort is not None:
+        request_kwargs["reasoning_effort"] = effort
 
     candidate = None
     input_tokens = output_tokens = 0
