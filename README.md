@@ -99,6 +99,12 @@ make lint      # ruff check .
 For local vLLM inference (NVIDIA GPU, CUDA 12.8, ≥ 24 GB VRAM):
 
 ```bash
+uv sync --extra vllm
+```
+
+vLLM is an optional extra so the base install resolves on macOS / non-CUDA hosts. If you don't use `uv`:
+
+```bash
 uv pip install vllm --extra-index-url https://download.pytorch.org/whl/cu128
 ```
 
