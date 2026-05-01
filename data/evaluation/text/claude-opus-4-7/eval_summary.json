@@ -1,0 +1,264 @@
+{
+  "response_file": "data/text_responses/response_claude-opus-4-7.jsonl",
+  "num_records": 5000,
+  "model_ids": [
+    "claude-opus-4-7"
+  ],
+  "data_quality": {
+    "json_parse_fail_count": 1,
+    "json_non_structured_root_count": 1,
+    "invalid_schema_input_count": 0,
+    "unknown_difficulty_count": 0,
+    "malformed_jsonl_line_count": 0
+  },
+  "summary": {
+    "overall": {
+      "n": 5000,
+      "metrics": {
+        "json_parse_success": {
+          "mean": 0.9998,
+          "ci95_low": 0.9994,
+          "ci95_high": 1.0,
+          "metric_name": "JSON Parse Success"
+        },
+        "json_root_structured": {
+          "mean": 0.9998,
+          "ci95_low": 0.9994,
+          "ci95_high": 1.0,
+          "metric_name": "Structured JSON Root"
+        },
+        "schema_valid_input": {
+          "mean": 1.0,
+          "ci95_low": 1.0,
+          "ci95_high": 1.0,
+          "metric_name": "Schema Valid Input"
+        },
+        "schema_compliance": {
+          "mean": 0.9994,
+          "ci95_low": 0.9986,
+          "ci95_high": 1.0,
+          "metric_name": "JSON Pass Rate"
+        },
+        "leaf_value_em": {
+          "mean": 0.8162720577279468,
+          "ci95_low": 0.8097301269444052,
+          "ci95_high": 0.8232455644362368,
+          "metric_name": "Truth Score"
+        },
+        "value_token_f1": {
+          "mean": 0.8958699154621574,
+          "ci95_low": 0.8891590405451744,
+          "ci95_high": 0.9023067295613729,
+          "metric_name": "Faithfulness Score"
+        },
+        "hier_path_recall": {
+          "mean": 0.9955153809363512,
+          "ci95_low": 0.9944389881072521,
+          "ci95_high": 0.9965270168436655,
+          "metric_name": "Path Recall"
+        },
+        "path_set_f1": {
+          "mean": 0.9923587427199886,
+          "ci95_low": 0.9911714572838304,
+          "ci95_high": 0.9935482582528837,
+          "metric_name": "Structure Coverage"
+        },
+        "type_precision": {
+          "mean": 0.9992031746031745,
+          "ci95_low": 0.9984031746031745,
+          "ci95_high": 0.9998031746031746,
+          "metric_name": "Type Safety"
+        },
+        "strict_json_em": {
+          "mean": 0.452,
+          "ci95_low": 0.438,
+          "ci95_high": 0.4662,
+          "metric_name": "Perfect Response Rate"
+        }
+      },
+      "category_scores": {
+        "Long Context Extraction": {
+          "mean": 0.9025524513754852,
+          "ci95_low": 0.8980511236417664,
+          "ci95_high": 0.9069415284910755,
+          "category_name": "Long Context Extraction",
+          "components": [
+            "leaf_value_em",
+            "value_token_f1",
+            "hier_path_recall"
+          ]
+        },
+        "Complex Schema Handling": {
+          "mean": 0.9969873057743879,
+          "ci95_low": 0.996235746284766,
+          "ci95_high": 0.9976894714960725,
+          "category_name": "Complex Schema Handling",
+          "components": [
+            "schema_compliance",
+            "path_set_f1",
+            "type_precision"
+          ]
+        },
+        "Multi-Context Linking": {
+          "mean": 0.8560709865950521,
+          "ci95_low": 0.8495170237778522,
+          "ci95_high": 0.862188403850189,
+          "category_name": "Multi-Context Linking",
+          "components": [
+            "leaf_value_em",
+            "value_token_f1"
+          ]
+        },
+        "Output Contract Reliability": {
+          "mean": 0.9994677248677248,
+          "ci95_low": 0.9988613756613757,
+          "ci95_high": 0.9999259259259259,
+          "category_name": "Output Contract Reliability",
+          "components": [
+            "json_parse_success",
+            "schema_compliance",
+            "type_precision"
+          ]
+        },
+        "Strict Precision": {
+          "mean": 0.452,
+          "ci95_low": 0.4386,
+          "ci95_high": 0.466,
+          "category_name": "Strict Precision",
+          "components": [
+            "strict_json_em"
+          ]
+        }
+      }
+    },
+    "overall_weighted": {
+      "n": 5000,
+      "metrics": {
+        "json_parse_success": {
+          "mean": 0.9997701853837904,
+          "ci95_low": 0.9993085433312846,
+          "ci95_high": 1.0,
+          "metric_name": "JSON Parse Success"
+        },
+        "json_root_structured": {
+          "mean": 0.9997701853837904,
+          "ci95_low": 0.9993083839237685,
+          "ci95_high": 1.0,
+          "metric_name": "Structured JSON Root"
+        },
+        "schema_valid_input": {
+          "mean": 1.0,
+          "ci95_low": 1.0,
+          "ci95_high": 1.0,
+          "metric_name": "Schema Valid Input"
+        },
+        "schema_compliance": {
+          "mean": 0.9993105561513712,
+          "ci95_low": 0.998392406032305,
+          "ci95_high": 1.0,
+          "metric_name": "JSON Pass Rate"
+        },
+        "leaf_value_em": {
+          "mean": 0.813406413499023,
+          "ci95_low": 0.806025071526903,
+          "ci95_high": 0.8212736632485365,
+          "metric_name": "Truth Score"
+        },
+        "value_token_f1": {
+          "mean": 0.8932524439000208,
+          "ci95_low": 0.8862154694412012,
+          "ci95_high": 0.9000254256664468,
+          "metric_name": "Faithfulness Score"
+        },
+        "hier_path_recall": {
+          "mean": 0.9951854754359392,
+          "ci95_low": 0.9939268615194923,
+          "ci95_high": 0.9962934610826744,
+          "metric_name": "Path Recall"
+        },
+        "path_set_f1": {
+          "mean": 0.9920203460154895,
+          "ci95_low": 0.9907288987680843,
+          "ci95_high": 0.9932942938624353,
+          "metric_name": "Structure Coverage"
+        },
+        "type_precision": {
+          "mean": 0.9991597783079321,
+          "ci95_low": 0.9982252791576445,
+          "ci95_high": 0.9998490255451212,
+          "metric_name": "Type Safety"
+        },
+        "strict_json_em": {
+          "mean": 0.44040140952964607,
+          "ci95_low": 0.42702661247028145,
+          "ci95_high": 0.4543922800030635,
+          "metric_name": "Perfect Response Rate"
+        }
+      },
+      "category_scores": {
+        "Long Context Extraction": {
+          "mean": 0.900614777611661,
+          "ci95_low": 0.895601525698018,
+          "ci95_high": 0.9052529791835965,
+          "category_name": "Long Context Extraction",
+          "components": [
+            "leaf_value_em",
+            "value_token_f1",
+            "hier_path_recall"
+          ]
+        },
+        "Complex Schema Handling": {
+          "mean": 0.9968302268249308,
+          "ci95_low": 0.995919778297869,
+          "ci95_high": 0.9975364286486597,
+          "category_name": "Complex Schema Handling",
+          "components": [
+            "schema_compliance",
+            "path_set_f1",
+            "type_precision"
+          ]
+        },
+        "Multi-Context Linking": {
+          "mean": 0.8533294286995219,
+          "ci95_low": 0.8465781800960971,
+          "ci95_high": 0.8602206130303508,
+          "category_name": "Multi-Context Linking",
+          "components": [
+            "leaf_value_em",
+            "value_token_f1"
+          ]
+        },
+        "Output Contract Reliability": {
+          "mean": 0.9994135066143647,
+          "ci95_low": 0.9987269609144129,
+          "ci95_high": 0.9999563228180517,
+          "category_name": "Output Contract Reliability",
+          "components": [
+            "json_parse_success",
+            "schema_compliance",
+            "type_precision"
+          ]
+        },
+        "Strict Precision": {
+          "mean": 0.44040140952964607,
+          "ci95_low": 0.4263411647662049,
+          "ci95_high": 0.4542528735632184,
+          "category_name": "Strict Precision",
+          "components": [
+            "strict_json_em"
+          ]
+        }
+      },
+      "weighting": "schema_complexity",
+      "weight_field_priority": [
+        "schema_complexity",
+        "difficulty"
+      ],
+      "difficulty_weights": {
+        "easy": 1.0,
+        "medium": 2.0,
+        "hard": 3.0
+      }
+    }
+  }
+}
