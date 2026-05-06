@@ -41,13 +41,18 @@ def _thinking_config_for(model_id: str) -> "types.ThinkingConfig":
     """Pick the right ThinkingConfig knobs for the model's parameter shape.
 
     Gemini 3 introduced `thinking_level` and dropped `thinking_budget` for
-    Pro/Flash; passing the wrong one to either generation errors out. See the
-    floors documented in the module docstring.
+    Pro/Flash; 2.5 Pro and 2.5 Flash-Lite enforce non-zero floors. Passing
+    the wrong knob to any of these generations errors out. See the floors
+    documented in the module docstring.
     """
-    mid = model_id.lower()
-    if mid.startswith("gemini-3") or mid.startswith("models/gemini-3"):
+    mid = model_id.lower().removeprefix("models/")
+    if mid.startswith("gemini-3"):
         level = "minimal" if "flash" in mid else "low"
         return types.ThinkingConfig(thinking_level=level)
+    if "2.5-pro" in mid:
+        return types.ThinkingConfig(thinking_budget=128)
+    if "2.5-flash-lite" in mid:
+        return types.ThinkingConfig(thinking_budget=512)
     return types.ThinkingConfig(thinking_budget=0)
 
 
