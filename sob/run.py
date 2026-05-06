@@ -13,6 +13,7 @@ through `build_eval_record` and writes to the right response directory via
 """
 
 import argparse
+import json
 from importlib import import_module
 
 from sob.common.serialization import (
@@ -50,6 +51,11 @@ def parse_args() -> argparse.Namespace:
     p.add_argument("--temperature", type=float, default=None)
     p.add_argument("--max-tokens", type=int, default=None)
     p.add_argument("--use-structured-decoding", action="store_true")
+    p.add_argument(
+        "--openrouter-extra-body",
+        default=None,
+        help='JSON passed as OpenRouter extra_body, e.g. \'{"provider":{"only":["xai"]},"reasoning":{"enabled":false}}\'.',
+    )
     return p.parse_args()
 
 
@@ -70,6 +76,8 @@ def _override_config(
         config.max_tokens = args.max_tokens
     if args.use_structured_decoding:
         config.use_structured_decoding = True
+    if args.openrouter_extra_body is not None:
+        config.openrouter_extra_body = json.loads(args.openrouter_extra_body)
     return config
 
 
