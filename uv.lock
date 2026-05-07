@@ -2703,6 +2703,10 @@ dependencies = [
     { name = "torch" },
     { name = "tqdm" },
     { name = "transformers" },
+]
+
+[package.optional-dependencies]
+vllm = [
     { name = "vllm" },
 ]
 
@@ -2727,8 +2731,9 @@ requires-dist = [
     { name = "torch", specifier = ">=2.10.0" },
     { name = "tqdm", specifier = ">=4.67.3" },
     { name = "transformers", specifier = ">=4.40.0" },
-    { name = "vllm", specifier = "==0.17.0" },
+    { name = "vllm", marker = "extra == 'vllm'", specifier = "==0.17.0" },
 ]
+provides-extras = ["vllm"]
 
 [[package]]
 name = "sse-starlette"
