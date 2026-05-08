@@ -36,15 +36,20 @@ def _infer_one(
     candidate = None
     input_tokens = output_tokens = 0
 
+    # Opus 4.7 deprecated temperature/top_p/top_k — passing any of them
+    # returns a 400. See https://platform.claude.com/docs/en/about-claude/models/whats-new-claude-4-7
+    kwargs: dict = dict(
+        model=config.model_id,
+        max_tokens=config.max_tokens,
+        system=SYSTEM_PROMPT,
+        messages=[{"role": "user", "content": user_msg}],
+    )
+    if "opus-4-7" not in config.model_id:
+        kwargs["temperature"] = config.temperature
+
     for attempt in range(config.max_retries):
         try:
-            response = client.messages.create(
-                model=config.model_id,
-                max_tokens=config.max_tokens,
-                system=SYSTEM_PROMPT,
-                messages=[{"role": "user", "content": user_msg}],
-                temperature=config.temperature,
-            )
+            response = client.messages.create(**kwargs)
             # Anthropic returns a list of content blocks; text lives on the
             # first one (TextBlock) for plain JSON tasks.
             raw = ""
