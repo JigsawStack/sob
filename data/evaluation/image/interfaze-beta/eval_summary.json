@@ -34,53 +34,53 @@
           "metric_name": "Schema Valid Input"
         },
         "schema_compliance": {
-          "mean": 0.8564593301435407,
-          "ci95_low": 0.8038277511961722,
-          "ci95_high": 0.9043062200956937,
+          "mean": 0.8708133971291866,
+          "ci95_low": 0.8181818181818182,
+          "ci95_high": 0.9138755980861244,
           "metric_name": "JSON Pass Rate"
         },
         "leaf_value_em": {
-          "mean": 0.5562403873141119,
-          "ci95_low": 0.5082435620996949,
-          "ci95_high": 0.6062044129737745,
+          "mean": 0.5859506640576075,
+          "ci95_low": 0.5401549074521328,
+          "ci95_high": 0.6345983224536442,
           "metric_name": "Truth Score"
         },
         "value_token_f1": {
-          "mean": 0.7220265986732678,
-          "ci95_low": 0.6720435594360519,
-          "ci95_high": 0.7693604768000328,
+          "mean": 0.7458604407318943,
+          "ci95_low": 0.699438097623905,
+          "ci95_high": 0.7908547969914235,
           "metric_name": "Faithfulness Score"
         },
         "hier_path_recall": {
-          "mean": 0.8415768796521425,
-          "ci95_low": 0.7921302615526636,
-          "ci95_high": 0.8882774337590906,
+          "mean": 0.8596531059591324,
+          "ci95_low": 0.8103094153066982,
+          "ci95_high": 0.9032289291129992,
           "metric_name": "Path Recall"
         },
         "path_set_f1": {
-          "mean": 0.8307800970280014,
-          "ci95_low": 0.7798704257107005,
-          "ci95_high": 0.8727449341903178,
+          "mean": 0.8490567513572477,
+          "ci95_low": 0.7997723986810572,
+          "ci95_high": 0.8919843192864522,
           "metric_name": "Structure Coverage"
         },
         "type_precision": {
-          "mean": 0.8564593301435407,
-          "ci95_low": 0.8086124401913876,
-          "ci95_high": 0.9043062200956937,
+          "mean": 0.8708133971291866,
+          "ci95_low": 0.8229665071770335,
+          "ci95_high": 0.9138755980861244,
           "metric_name": "Type Safety"
         },
         "strict_json_em": {
-          "mean": 0.11483253588516747,
-          "ci95_low": 0.07177033492822966,
-          "ci95_high": 0.16267942583732056,
+          "mean": 0.1291866028708134,
+          "ci95_low": 0.08133971291866028,
+          "ci95_high": 0.17703349282296652,
           "metric_name": "Perfect Response Rate"
         }
       },
       "category_scores": {
         "Long Context Extraction": {
-          "mean": 0.7066146218798407,
-          "ci95_low": 0.6649899049093924,
-          "ci95_high": 0.7486455353937841,
+          "mean": 0.7304880702495448,
+          "ci95_low": 0.6903295145647779,
+          "ci95_high": 0.7730502789529826,
           "category_name": "Long Context Extraction",
           "components": [
             "leaf_value_em",
@@ -89,9 +89,9 @@
           ]
         },
         "Complex Schema Handling": {
-          "mean": 0.8478995857716942,
-          "ci95_low": 0.8000954107960992,
-          "ci95_high": 0.8912936941457287,
+          "mean": 0.8635611818718737,
+          "ci95_low": 0.8154156907891592,
+          "ci95_high": 0.9062968887945424,
           "category_name": "Complex Schema Handling",
           "components": [
             "schema_compliance",
@@ -100,9 +100,9 @@
           ]
         },
         "Multi-Context Linking": {
-          "mean": 0.6391334929936899,
-          "ci95_low": 0.5926307984824499,
-          "ci95_high": 0.684001902374487,
+          "mean": 0.6659055523947509,
+          "ci95_low": 0.6219133535216207,
+          "ci95_high": 0.7065674986037837,
           "category_name": "Multi-Context Linking",
           "components": [
             "leaf_value_em",
@@ -110,9 +110,9 @@
           ]
         },
         "Output Contract Reliability": {
-          "mean": 0.9027113237639552,
-          "ci95_low": 0.8676236044657097,
-          "ci95_high": 0.9346092503987241,
+          "mean": 0.9122807017543859,
+          "ci95_low": 0.8787878787878788,
+          "ci95_high": 0.9425837320574163,
           "category_name": "Output Contract Reliability",
           "components": [
             "json_parse_success",
@@ -121,9 +121,9 @@
           ]
         },
         "Strict Precision": {
-          "mean": 0.11483253588516747,
-          "ci95_low": 0.07177033492822966,
-          "ci95_high": 0.15789473684210525,
+          "mean": 0.1291866028708134,
+          "ci95_low": 0.0861244019138756,
+          "ci95_high": 0.17703349282296652,
           "category_name": "Strict Precision",
           "components": [
             "strict_json_em"
@@ -153,53 +153,53 @@
           "metric_name": "Schema Valid Input"
         },
         "schema_compliance": {
-          "mean": 0.8521594684385382,
-          "ci95_low": 0.8019966722129783,
-          "ci95_high": 0.8994974874371859,
+          "mean": 0.867109634551495,
+          "ci95_low": 0.8183333333333334,
+          "ci95_high": 0.9151414309484193,
           "metric_name": "JSON Pass Rate"
         },
         "leaf_value_em": {
-          "mean": 0.5587225814752367,
-          "ci95_low": 0.5084633809422346,
-          "ci95_high": 0.6078186662341794,
+          "mean": 0.5887942217380009,
+          "ci95_low": 0.5386891037298175,
+          "ci95_high": 0.636431337948883,
           "metric_name": "Truth Score"
         },
         "value_token_f1": {
-          "mean": 0.7209196871933863,
-          "ci95_low": 0.6697617057998083,
-          "ci95_high": 0.768747725006925,
+          "mean": 0.7463015286311868,
+          "ci95_low": 0.6980958220121339,
+          "ci95_high": 0.7918353567119947,
           "metric_name": "Faithfulness Score"
         },
         "hier_path_recall": {
-          "mean": 0.837082067103977,
-          "ci95_low": 0.7858431630808539,
-          "ci95_high": 0.8831020131536742,
+          "mean": 0.8557982252897178,
+          "ci95_low": 0.810019140753612,
+          "ci95_high": 0.9007506090037631,
           "metric_name": "Path Recall"
         },
         "path_set_f1": {
-          "mean": 0.8268572377929342,
-          "ci95_low": 0.7725013671213219,
-          "ci95_high": 0.8725383801315261,
+          "mean": 0.8461462791156019,
+          "ci95_low": 0.7933368776938658,
+          "ci95_high": 0.8905156498990966,
           "metric_name": "Structure Coverage"
         },
         "type_precision": {
-          "mean": 0.8521594684385382,
-          "ci95_low": 0.8053244592346089,
-          "ci95_high": 0.9011725293132329,
+          "mean": 0.867109634551495,
+          "ci95_low": 0.8219633943427621,
+          "ci95_high": 0.912106135986733,
           "metric_name": "Type Safety"
         },
         "strict_json_em": {
-          "mean": 0.11461794019933555,
-          "ci95_low": 0.07236842105263158,
-          "ci95_high": 0.16026711185308848,
+          "mean": 0.12790697674418605,
+          "ci95_low": 0.08375209380234507,
+          "ci95_high": 0.1744186046511628,
           "metric_name": "Perfect Response Rate"
         }
       },
       "category_scores": {
         "Long Context Extraction": {
-          "mean": 0.7055747785908667,
-          "ci95_low": 0.658278168400453,
-          "ci95_high": 0.7491840552340282,
+          "mean": 0.7302979918863018,
+          "ci95_low": 0.6841554780858877,
+          "ci95_high": 0.7731194720848945,
           "category_name": "Long Context Extraction",
           "components": [
             "leaf_value_em",
@@ -208,9 +208,9 @@
           ]
         },
         "Complex Schema Handling": {
-          "mean": 0.8437253915566703,
-          "ci95_low": 0.7931132457496363,
-          "ci95_high": 0.891327096321407,
+          "mean": 0.8601218494061972,
+          "ci95_low": 0.8102174283981589,
+          "ci95_high": 0.9073924499450741,
           "category_name": "Complex Schema Handling",
           "components": [
             "schema_compliance",
@@ -219,9 +219,9 @@
           ]
         },
         "Multi-Context Linking": {
-          "mean": 0.6398211343343115,
-          "ci95_low": 0.5937525802780164,
-          "ci95_high": 0.6846232411790564,
+          "mean": 0.6675478751845938,
+          "ci95_low": 0.623453208618622,
+          "ci95_high": 0.7104363903908403,
           "category_name": "Multi-Context Linking",
           "components": [
             "leaf_value_em",
@@ -229,9 +229,9 @@
           ]
         },
         "Output Contract Reliability": {
-          "mean": 0.8997785160575857,
-          "ci95_low": 0.8655555555555556,
-          "ci95_high": 0.9344444444444444,
+          "mean": 0.9097452934662237,
+          "ci95_low": 0.8770491803278688,
+          "ci95_high": 0.9415977961432507,
           "category_name": "Output Contract Reliability",
           "components": [
             "json_parse_success",
@@ -240,9 +240,9 @@
           ]
         },
         "Strict Precision": {
-          "mean": 0.11461794019933555,
-          "ci95_low": 0.07370184254606366,
-          "ci95_high": 0.15851602023608768,
+          "mean": 0.12790697674418605,
+          "ci95_low": 0.08731466227347612,
+          "ci95_high": 0.17391304347826086,
           "category_name": "Strict Precision",
           "components": [
             "strict_json_em"
@@ -269,6 +269,10 @@
       },
       {
         "path": "key_advantages[11]",
+        "count": 1
+      },
+      {
+        "path": "key_advantages[7]",
         "count": 1
       },
       {
@@ -312,11 +316,7 @@
         "count": 1
       },
       {
-        "path": "total_sound_description.weakened_by_factors[5]",
-        "count": 1
-      },
-      {
-        "path": "postdoc_details.development_areas[1]",
+        "path": "research_scientist_details.research_focus[1]",
         "count": 1
       },
       {
@@ -328,19 +328,19 @@
         "count": 1
       },
       {
+        "path": "inner_model_assessment.r_squared_interpretation[3].context",
+        "count": 1
+      },
+      {
+        "path": "inner_model_assessment.r_squared_interpretation[3].description",
+        "count": 1
+      },
+      {
+        "path": "inner_model_assessment.r_squared_interpretation[3].r_squared_value",
+        "count": 1
+      },
+      {
         "path": "inner_model_assessment.r_squared_interpretation[4].context",
-        "count": 1
-      },
-      {
-        "path": "inner_model_assessment.r_squared_interpretation[4].description",
-        "count": 1
-      },
-      {
-        "path": "inner_model_assessment.r_squared_interpretation[4].r_squared_value",
-        "count": 1
-      },
-      {
-        "path": "overall_hydrogen_absorption_mechanism",
         "count": 1
       }
     ],
