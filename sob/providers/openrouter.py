@@ -5,12 +5,14 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 
 from openai import OpenAI
 from tqdm import tqdm
+from dotenv import load_dotenv
 
 from sob.common.prompts import SYSTEM_PROMPT, build_user_message
 from sob.common.schema_utils import parse_if_string
 from utils.config import InferenceConfig
 from utils.logger import logger
 
+load_dotenv()
 
 def _infer_one(
     client: OpenAI,

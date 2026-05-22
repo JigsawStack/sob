@@ -1,10 +1,10 @@
-import json
 import os
 import time
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
 import anthropic
 from tqdm import tqdm
+from dotenv import load_dotenv
 
 from sob.common.checkpoint import JsonlCheckpoint, checkpoint_path_for
 from sob.common.prompts import SYSTEM_PROMPT, build_user_message
@@ -13,6 +13,7 @@ from sob.common.serialization import build_eval_record
 from utils.config import InferenceConfig
 from utils.logger import logger
 
+load_dotenv()
 
 def _backoff_seconds(error: Exception, attempt: int) -> int:
     """Rate-limit-aware exponential backoff.

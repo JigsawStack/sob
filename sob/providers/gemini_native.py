@@ -26,6 +26,7 @@ import time
 from google import genai
 from google.genai import types
 from tqdm.auto import tqdm
+from dotenv import load_dotenv
 
 from sob.common.prompts import SYSTEM_PROMPT, build_user_message
 from sob.common.schema_utils import (
@@ -36,6 +37,7 @@ from sob.common.schema_utils import (
 from utils.config import InferenceConfig
 from utils.logger import logger
 
+load_dotenv()
 
 def _thinking_config_for(model_id: str) -> "types.ThinkingConfig":
     """Pick the right ThinkingConfig knobs for the model's parameter shape.

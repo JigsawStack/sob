@@ -27,12 +27,14 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 
 from openai import OpenAI
 from tqdm import tqdm
+from dotenv import load_dotenv
 
 from sob.common.prompts import SYSTEM_PROMPT, build_user_message
 from sob.common.schema_utils import parse_if_string, normalize_schema_strict
 from utils.config import InferenceConfig
 from utils.logger import logger
 
+load_dotenv()
 
 _GPT5_DOTTED = re.compile(r"^gpt-5\.\d")
 
