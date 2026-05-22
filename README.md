@@ -45,17 +45,17 @@
 
 Top 5 by **Overall** (coverage-adjusted aggregate across text + image + audio). The full live leaderboard is on the [SOB Leaderboard Space](https://huggingface.co/spaces/interfaze-ai/sob-leaderboard) — it auto-updates whenever a model PR lands.
 
-| Rank | Model              | Overall   | Val. Acc. | Faithful. | JSON Pass | Path Rec. | Str. Cov. | Type Saf. | Perfect |
-| :--- | :----------------- | :-------: | :-------: | :-------: | :-------: | :-------: | :-------: | :-------: | :-----: |
-|   1  | **GPT-5.4**        | **0.870** |   0.798   | **0.869** | **0.993** | **0.988** | **0.981** | **0.993** |  0.469  |
-|   2  | GLM-4.7            |   0.861   | **0.804** |   0.868   |   0.965   |   0.959   |   0.957   |   0.965   | **0.508** |
-|   3  | Qwen3.5-35B        |   0.861   |   0.801   |   0.863   |   0.969   |   0.962   |   0.960   |   0.969   |  0.500  |
-|   4  | Gemini-2.5-Flash   |   0.860   |   0.796   |   0.856   |   0.972   |   0.967   |   0.961   |   0.972   |  0.498  |
-|   5  | Qwen3-235B         |   0.857   |   0.786   |   0.854   |   0.978   |   0.970   |   0.968   |   0.978   |  0.463  |
+| Rank | Model                    | Overall   | Val. Acc. | Faithful. | JSON Pass | Path Rec. | Str. Cov. | Type Saf. | Perfect |
+| :--- | :----------------------- | :-------: | :-------: | :-------: | :-------: | :-------: | :-------: | :-------: | :-----: |
+|   1  | **GPT-5.4**              | **0.870** |   0.798   |   0.869   | **0.993** | **0.988** |   0.981   | **0.993** |  0.469  |
+|   2  | Gemini-3.1-Pro-Preview   |   0.869   | **0.820** |   0.876   |   0.966   |   0.960   |   0.958   |   0.966   | **0.542** |
+|   3  | GLM-5.1                  |   0.866   |   0.806   |   0.872   |   0.975   |   0.969   |   0.967   |   0.975   |  0.498  |
+|   4  | Claude-Opus-4.7          |   0.864   |   0.787   | **0.877** |   0.993   |   0.988   | **0.983** |   0.993   |  0.424  |
+|   5  | GLM-4.7                  |   0.861   |   0.804   |   0.868   |   0.965   |   0.959   |   0.957   |   0.965   |  0.508  |
 
-Per-modality bests: **text 0.830 (GLM-4.7) · image 0.672 (Gemma-4-31B) · audio 0.237 (Gemini-2.5-Flash)** — see paper Tables 2–4. Perfect Response is aggregated over text + image only.
+Per-modality bests: **text 0.850 (Gemini-3.1-Pro-Preview) · image 0.669 (Gemma-4-31B) · audio 0.237 (Gemini-2.5-Flash)** — see paper Tables 2–4. Perfect Response is aggregated over text + image only.
 
-**All 21 rows + per-modality leaderboards →** [interfaze-ai/sob-leaderboard](https://huggingface.co/spaces/interfaze-ai/sob-leaderboard)
+**All 32 rows + per-modality leaderboards →** [interfaze-ai/sob-leaderboard](https://huggingface.co/spaces/interfaze-ai/sob-leaderboard)
 
 ## Quickstart
 
