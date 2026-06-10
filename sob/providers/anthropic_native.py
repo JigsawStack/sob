@@ -45,7 +45,10 @@ def _infer_one(
         system=SYSTEM_PROMPT,
         messages=[{"role": "user", "content": user_msg}],
     )
-    if "opus-4-7" not in config.model_id:
+
+    exclude_model = ["opus-4-7", "opus-4-8", "claude-fable-5"]
+
+    if config.model_id not in exclude_model:
         kwargs["temperature"] = config.temperature
 
     for attempt in range(config.max_retries):

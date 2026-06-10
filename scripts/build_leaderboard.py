@@ -210,7 +210,8 @@ def main():
         row["model_dir"] = model_dir
         rows.append(row)
 
-    rows.sort(key=lambda r: -r["overall_adj"])
+    # Sort by Overall desc
+    rows.sort(key=lambda r: (-round(r["overall_adj"], 4), -(r["value_accuracy"] or 0)))
 
     payload = {
         "generated_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
