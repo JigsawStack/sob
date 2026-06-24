@@ -20,5 +20,16 @@
   "gpt-oss":                              "GPT-OSS-20B",
   "inference-net-Schematron-8B":          "Schematron-8B",
   "ibm-granite-4.0-h-small":              "IBM-Granite-4.0",
-  "interfaze-beta":                       "Interfaze-Beta"
+  "interfaze-beta":                       "Interfaze-Beta",
+  "claude-opus-4-6":                      "Claude-Opus-4.6",
+  "claude-opus-4-7":                      "Claude-Opus-4.7",
+  "deepseek_deepseek-v4-pro":             "DeepSeek-V4-Pro",
+  "gemini-2.5-pro":                       "Gemini-2.5-Pro",
+  "gemini-3.1-pro-preview":               "Gemini-3.1-Pro-Preview",
+  "gemini-3.5-flash":                     "Gemini-3.5-Flash",
+  "gpt-5.4-mini":                         "GPT-5.4-Mini",
+  "gpt-5.5":                              "GPT-5.5",
+  "moonshotai_kimi-k2.6":                 "Kimi-K2.6",
+  "x-ai_grok-4.3":                        "Grok-4.3",
+  "z-ai_glm-5.1":                         "GLM-5.1"
 }
