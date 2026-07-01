@@ -46,7 +46,7 @@ def _infer_one(
         messages=[{"role": "user", "content": user_msg}],
     )
 
-    exclude_model = ["opus-4-7", "opus-4-8", "claude-fable-5"]
+    exclude_model = ["opus-4-7", "opus-4-8", "claude-fable-5", "claude-sonnet-5"]
 
     if config.model_id not in exclude_model:
         kwargs["temperature"] = config.temperature
